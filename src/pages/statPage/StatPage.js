@@ -8,9 +8,9 @@ const StatPage = () => {
             <Header/>
             <div className="container">
                 <div className="StatPage__in">
-                    <h1>
-                    Статистика
-                    </h1>
+                    <div className="StatPage__body main">
+
+                    </div>
                 </div>
             </div>
         </div>

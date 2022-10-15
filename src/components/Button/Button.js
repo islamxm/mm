@@ -7,7 +7,8 @@ const Button = ({
     variant,
     type,
     style,
-    size
+    size,
+    onClick
 }) => {
 
 
@@ -19,6 +20,8 @@ const Button = ({
                 return ' primary '
             case 'danger':
                 return ' danger '
+            case 'success':
+                return ' success '
             default:
                 return ' default '
         }
@@ -39,7 +42,7 @@ const Button = ({
 
 
     return (
-        <button style={style} className={"Button" + variantHandle() + sizeHandle()} type={type} disabled={disabled}>
+        <button onClick={onClick} style={style} className={"Button" + variantHandle() + sizeHandle()} type={type} disabled={disabled}>
             <span className="Button__text">{text}</span>
         </button>
     )

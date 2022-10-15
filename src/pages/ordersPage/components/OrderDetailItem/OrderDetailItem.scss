@@ -1,0 +1,54 @@
+.OrderDetailItem {
+    display: flex;
+    padding: 15px 25px;
+    background: #FFFFFF;
+    /* 5 */
+
+    border: 1px solid #DBDBDB;
+    border-radius: 5px;
+
+    &__img {    
+        width: 140px;
+        height: 140px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex: 0 0 auto;
+        margin-right: 30px;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: flex;
+        }
+    }   
+
+    &__body {
+
+        &_main {
+            margin-bottom: 15px;
+
+            &_name {
+                font-weight: 500;
+                font-size: 24px;
+                line-height: 150%;
+            }
+
+            &_cp {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 150%;
+                letter-spacing: 0.5px;
+                color: #595959;
+            }
+        }
+
+        &_price {
+            font-weight: 500;
+            font-size: 32px;
+            line-height: 150%;
+            letter-spacing: 0.5px;
+            color: var(--aqua);
+        }
+    }
+}

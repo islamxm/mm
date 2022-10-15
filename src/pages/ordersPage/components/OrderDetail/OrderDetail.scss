@@ -1,0 +1,49 @@
+.OrderDetail {
+
+    &__head {
+        text-align: center;
+        font-weight: 500;
+        font-size: 48px;
+        line-height: 56px;
+        margin-bottom: 35px;
+    }
+
+    &__body {
+        &_list {
+
+        }
+
+        &_item {
+            margin-bottom: 10px;
+        }
+
+        &_main {
+            margin-top: 50px;
+            &_item {
+                margin-bottom: 25px;
+
+
+                &_name {
+                    font-weight: 400;
+                    font-size: 24px;
+                    line-height: 28px;
+                    color: #575757;
+                    margin-bottom: 10px;
+                }
+
+                &_value {
+                    font-weight: 500;
+                    font-size: 24px;
+                    line-height: 28px;
+                }
+            }
+        }
+
+        &_action {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
