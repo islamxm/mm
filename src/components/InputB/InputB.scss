@@ -1,0 +1,37 @@
+.InputB {
+
+    input {
+        padding: 20px 30px;
+        background-color: var(--gray);
+        border: 2px solid var(--gray_border);
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+        display: block;
+        width: 100%;
+        transition: all .3s ease;
+        outline: none;
+        border-radius: 52px;
+
+        &::placeholder {
+            color: var(--dark_gray);
+
+        }
+
+        &:focus {
+            border-color: var(--aqua);
+        }
+    }
+}
+
+.InputB.disabled {
+    opacity: .5;
+    pointer-events: none;
+    touch-action: none;
+}
+
+.InputB.error {
+    input {
+        border-color: var(--red) !important;
+    }
+}

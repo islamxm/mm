@@ -1,0 +1,50 @@
+.OrderItem {
+    border-radius: 25px;
+    background-color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 20px;
+    color: #fff;
+
+    &__info {
+
+        &_item {
+            font-weight: 600;
+            font-size: 26px;
+            line-height: 30px;
+            margin-bottom: 10px;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__body {
+        width: 380px;
+
+        &_item {
+            margin-bottom: 5px;
+            display: flex;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &_name {
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 21px;
+                margin-right: 15px;
+                white-space: nowrap;
+                padding-top: 5px;
+            }
+
+            &_value {
+                font-weight: 600;
+                font-size: 23.7273px;
+                line-height: 28px;
+            }
+        }
+    }
+}

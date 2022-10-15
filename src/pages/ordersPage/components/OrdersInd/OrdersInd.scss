@@ -1,0 +1,77 @@
+.OrdersInd {
+    max-width: 980px;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 40px;
+
+    &__body {
+        display: flex;
+        justify-content: space-between;
+
+        &_item {
+            width: calc(100% / 3.1);
+            height: 122px;
+            border-radius: 12px;
+            padding: 25px 15px;
+            display: flex;
+            align-items: center;
+           
+
+            &_icon {
+                flex: 0 0 auto;
+                width: 73px;
+                height: 73px;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #fff;
+                margin-right: 10px;
+                font-size: 40px;
+                line-height: 40px;
+                box-shadow: 0px 0px 22px rgba(0, 0, 0, 0.17);
+            }
+
+            &_info {
+                color: #fff;
+
+                &_value {
+                    font-size: 25px;
+                    line-height: 30px;
+                    font-weight: 700;
+                    margin-bottom: 4px;
+                }
+
+                &_name {
+                    font-size: 17px;
+                    line-height: 20px;
+                    font-weight: 700;
+                }
+            }
+
+            &:nth-child(1) {
+                background-color: var(--green);
+
+                .OrdersInd__body_item_icon {
+                    color: var(--green);
+                }
+            }
+
+            &:nth-child(2) {
+                background-color: var(--blue);
+
+                .OrdersInd__body_item_icon {
+                    color: var(--blue);
+                }
+            }
+
+            &:nth-child(3) {
+                background-color: var(--purp);
+
+                .OrdersInd__body_item_icon {
+                    color: var(--purp);
+                }
+            }
+        }
+    }
+}

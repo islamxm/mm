@@ -1,0 +1,52 @@
+.AuthPage {
+    padding: 30px 0;
+    &__in {
+        box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.01);
+        border-radius: 43px;
+        background-color: #fff;
+        height: calc(100vh - 60px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__body {
+        max-width: 580px;
+        width: 100%;
+        &_head {
+            margin-bottom: 40px;
+
+            &_title {
+                margin-bottom: 15px;
+                text-align: center;
+                color: var(--blue);
+                font-weight: 500;
+                font-size: 32px;
+                line-height: 38px;
+            }
+    
+            &_subtitle {
+                text-align: center;
+                font-size: 20px;
+                line-height: 23px;
+            }
+        }
+
+        &_form {
+
+        }
+
+        &_row {
+            margin-bottom: 30px;
+        }
+
+        &_action {
+            margin-top: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    
+}
