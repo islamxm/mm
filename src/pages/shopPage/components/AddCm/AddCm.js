@@ -20,8 +20,8 @@ const AddCm = ({visible, close, save}) => {
 
     const saveHandle = () => {
         const data = {
-            name,
-            price
+            Name: name,
+            Price: price,
         }
 
         save(data);
@@ -36,7 +36,7 @@ const AddCm = ({visible, close, save}) => {
     
     return (
         <Modal className="AddCm modal" open={visible} width={600} onCancel={closeHandle}>
-            <button className="modal__close"><GrClose/></button>      
+            <button className="modal__close" onClick={closeHandle}><GrClose/></button>      
             <h2 className="AddCm__head">
                 Добавить комплектацию    
             </h2>   

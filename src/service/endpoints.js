@@ -13,8 +13,12 @@ const endpoints = {
     getSubcategory: `${BASE_DOMAIN}/services.php?category=services&`,
     editSubcategory: `${BASE_DOMAIN}/services.php?category=services`,
     getServices: `${BASE_DOMAIN}/services.php?`,
-    addServ: `${BASE_DOMAIN}/services.php?action=add`
-
+    addServ: `${BASE_DOMAIN}/services.php?action=add`,
+    editServ: `${BASE_DOMAIN}/services.php`,
+    deleteServ: `${BASE_DOMAIN}/services.php?`,
+    getFaq: `${BASE_DOMAIN}/questionanswer.php`,
+    editFaq: `${BASE_DOMAIN}/questionanswer.php?`,
+    stat: `${BASE_DOMAIN}/statistics.php?`,
     
 }
 

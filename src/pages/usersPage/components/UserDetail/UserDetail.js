@@ -43,7 +43,7 @@ const UserDetail = ({visible, close}) => {
                         {
                             mock && mock.length > 0 ? (
                                 mock.map((item, index) => (
-                                    <div className="UserDetail__body_docs_item">
+                                    <div className="UserDetail__body_docs_item" key={index}>
                                         <DocItem name={'adasd'}/>
                                     </div>
                                 ))

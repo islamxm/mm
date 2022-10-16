@@ -1,6 +1,6 @@
 import { message, Modal } from "antd";
 import {GrClose} from 'react-icons/gr';
-import './AddServ.scss';
+import '../AddServ/AddServ.scss';
 import {Row, Col} from "antd";
 import InputB from "../../../../components/InputB/InputB";
 import { useEffect, useState } from "react";
@@ -22,9 +22,9 @@ const as = new authService()
 
 
 
-const AddServ = ({visible, close, updateList}) => {
+const EditServ = ({visible, close, updateList, data}) => {
     const {token} = useSelector(state => state);
-    const {subId, categoryId} = useParams();
+    const {subId} = useParams();
     
     const [name, setName] = useState('');
     // const [price, setPrice] = useState('');
@@ -37,6 +37,24 @@ const AddServ = ({visible, close, updateList}) => {
 
     const [cm, setCm] = useState(false);
     const [load, setLoad] = useState(false)
+    const [dload, setDload] = useState(false)
+
+
+    useEffect(() => {
+        if(data) {
+            setName(data?.title)
+            setDescr(data?.descr)
+            setPrevs(data?.images?.map(item => item.URL))
+            setComplects(data?.complect?.map((item) => {
+                return {
+                    Name: item.Name,
+                    Price: item.Price
+                }
+            }))
+        }
+    }, [data])
+
+
     const openCm = () => setCm(true)
     const closeCm = () => setCm(false)
 
@@ -66,15 +84,15 @@ const AddServ = ({visible, close, updateList}) => {
         })
     }
 
+    
+
     const onDeleteComplect = (index) => {
         const mod = complects;
         const rm = mod.splice(index, 1);
         setComplects([...mod])
     }
 
-    useEffect(() => {
-        console.log(subId)
-    }, [subId])
+
 
 
     const onSubmit = () => {
@@ -84,6 +102,7 @@ const AddServ = ({visible, close, updateList}) => {
         data.append('ServiceTitle', name)
         data.append('ServiceDescription', descr)
         data.append('complect', JSON.stringify(complects))
+        data.append('ID', data.id)
         if(images.length > 0) {
             images.forEach(item => {
                 data.append('image', item)
@@ -91,11 +110,23 @@ const AddServ = ({visible, close, updateList}) => {
         }
         data.append('ServiceType', subId)
 
-        as.addServ(token, data, categoryId, subId).then(res => {
+        as.editServ(token, data).then(res => {
+            updateList(res)
+            console.log(res)
+        }).finally(_ => {
+            setLoad(false)
+            closeHandle()
+        })
+    }
+
+    const onDelete = () => {
+        setDload(true)
+        console.log('delete')
+        as.deleteServ(token, data.id).then(res => {
             console.log(res)
             updateList(res)
         }).finally(_ => {
-            setLoad(false)
+            setDload(false)
             closeHandle()
         })
     }
@@ -112,11 +143,15 @@ const AddServ = ({visible, close, updateList}) => {
         close()
     }
 
+    useEffect(() => {
+        console.log(complects)
+    }, [complects])
+
     return (
         <Modal width={830} open={visible} onCancel={closeHandle} className="modal AddServ">
             <AddCm save={onAddComplect} visible={cm} close={closeCm}/>
             <button className="modal__close" onClick={closeHandle}><GrClose/></button>
-            <h2 className="AddServ__head block_title">Создание услуги</h2>
+            <h2 className="AddServ__head block_title">Редактирование услуги</h2>
             <div className="AddServ__body">
                 <Row gutter={[20, 0]} style={{marginBottom: 20}}>
                     <Col span={12}>
@@ -202,17 +237,18 @@ const AddServ = ({visible, close, updateList}) => {
                                 text={'Сохранить'} 
                                 variant={'primary'}
                                 size={'sm'}
-                                disabled={!name || !descr || images.length == 0 || complects.length == 0}
+                                disabled={true}
                                 onClick={onSubmit}
                                 load={load}
                                 />
                         </Col>
                         <Col span={8}>
                             <Button 
-                                text={'Отмена'} 
+                                load={dload}
+                                text={'Удалить'} 
                                 variant={'danger'} 
                                 size={'sm'}
-                                onClick={closeHandle}/>
+                                onClick={onDelete}/>
                         </Col>
                     </Row>
                 </div>
@@ -221,4 +257,4 @@ const AddServ = ({visible, close, updateList}) => {
     )
 }
 
-export default AddServ;
+export default EditServ;

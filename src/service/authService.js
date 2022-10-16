@@ -204,9 +204,9 @@ class authService {
     }
 
 
-    getServices = async (token, id) => {
+    getServices = async (token, catId, id) => {
         try {
-            let res = await fetch(endpoints.getServices, {
+            let res = await fetch(endpoints.getServices + `CategoryID=${catId}&ID=${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -223,7 +223,7 @@ class authService {
     }
 
 
-    addServ = async (token, data) => {
+    addServ = async (token, data, catId, subcatId) => {
         try {
             let res = await fetch(endpoints.addServ, {
                 method: 'POST',
@@ -240,6 +240,132 @@ class authService {
         }
     }
 
+    editServ = async (token, data) => {
+        try {
+            let res = await fetch(endpoints.editServ, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: data
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    deleteServ = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.deleteServ + `ID=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+
+    getFaq = async (token) => {
+        try {
+            let res = await fetch(endpoints.getFaq, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editFaq = async (token, id, data) => {
+        console.log(endpoints.editFaq + `id=${id}`)
+        try {
+            let res = await fetch(endpoints.editFaq + `id=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: JSON.stringify(data)
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    deleteFaq = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.editFaq + `id=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    addFaq = async (token, data) => {
+        try {
+            let res = await fetch(endpoints.editFaq, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: JSON.stringify(data)
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    getStat = async (token, period, category) => {
+        try {
+            let res = await fetch(endpoints.stat + `period=${period}&category=${category}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            return await res.json()
+        } catch(err) {
+            console.log(err)
+        }
+    }
     
 }
 

@@ -1,9 +1,15 @@
 import './OrdersInd.scss';
 import {HiOutlineClipboardDocumentList} from 'react-icons/hi2';
 import {BiUserCircle} from 'react-icons/bi';
+import authService from '../../../../service/authService';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
+const as = new authService()
 
-const OrdersInd = () => {
+const OrdersInd = ({data}) => {
+    
+
 
     return (
         <div className="OrdersInd">
@@ -13,7 +19,7 @@ const OrdersInd = () => {
                         <HiOutlineClipboardDocumentList/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">2 001</div>
+                        <div className="OrdersInd__body_item_info_value">{data?.total_count}</div>
                         <div className="OrdersInd__body_item_info_name">Количество заказов</div>
                     </div>
                 </div>
@@ -22,7 +28,7 @@ const OrdersInd = () => {
                         <BiUserCircle/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">551</div>
+                        <div className="OrdersInd__body_item_info_value">{data?.total_count_new}</div>
                         <div className="OrdersInd__body_item_info_name">Заказы от новых клиентов</div>
                     </div>
                 </div>
@@ -31,7 +37,7 @@ const OrdersInd = () => {
                         <BiUserCircle/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">617</div>
+                        <div className="OrdersInd__body_item_info_value">{data?.total_count_old}</div>
                         <div className="OrdersInd__body_item_info_name">Заказы тех кто уже делал заказ</div>
                     </div>
                 </div>

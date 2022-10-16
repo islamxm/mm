@@ -14,8 +14,8 @@ const Complects = ({list, addComplect, deleteComplect}) => {
                     list && list.length > 0 ? (
                         list.map((item, index) => (
                             <div className="Complects__body_item">
-                                <InputB readOnly size={'sm'} wrapStyle={{width: 350, margin: '0 3px'}} value={item.name}/>
-                                <InputB readOnly size={'sm'} wrapStyle={{width: 130, margin: '0 3px'}} value={item.price}/>
+                                <InputB readOnly size={'sm'} wrapStyle={{width: 350, margin: '0 3px'}} value={item.Name}/>
+                                <InputB readOnly size={'sm'} wrapStyle={{width: 130, margin: '0 3px'}} value={item.Price}/>
                                 <button onClick={() => deleteComplect(index)} className="Complects__body_item_del">
                                     <BsTrash/>
                                 </button>

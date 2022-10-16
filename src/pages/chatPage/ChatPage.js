@@ -8,9 +8,9 @@ const ChatPage = () => {
             <Header/>
             <div className="container">
                 <div className="ChatPage__in">
-                    <h1>
-                        Чат
-                    </h1>
+                    <div className="ChatPage__body main">
+                        
+                    </div>
                 </div>
             </div>
         </div>

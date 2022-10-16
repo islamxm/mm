@@ -9,8 +9,11 @@ import OrderItem from '../ordersPage/components/OrderItem/OrderItem';
 import useModal from '../../hooks/useModal';
 import UserDetail from './components/UserDetail/UserDetail';
 import Push from './components/Push/Push';
+import authService from '../../service/authService';
+import EmptyList from '../../components/EmptyList/EmptyList';
 
 const mock = [1, 2, 3];
+const as = new authService();
 
 const UsersPage = () => {
     const {token} = useSelector(state => state)
@@ -25,6 +28,15 @@ const UsersPage = () => {
     const closePush = () => setPush(false)
     const openDetail = () => setDetail(true)
     const closeDetail = () => setDetail(false)
+
+    useEffect(() => {
+        if(token) {
+            as.oredrs(token).then(res => {
+                setList(res.orders)
+                console.log(res)
+            })
+        }
+    }, [token])
 
     return (
         <div className="UsersPage page">
@@ -50,19 +62,39 @@ const UsersPage = () => {
                         </div>
                         <div className="UsersPage__body_list">
                             {
-                                mock && mock.length > 0 ? (
-                                    mock.map((item, index) => (
-                                        <div className="UsersPage__body_item">
-                                            <OrderItem openDetail={openDetail}/>
+                                list && list.length > 0 ? (
+                                    list.map((item, index) => (
+                                        <div className="UsersPage__body_item" key={index}>
+                                            <OrderItem 
+                                            BundleID={item.BundleID}
+                                            CompanyID={item.CompanyID}
+                                            ComplectationID={item.ComplectationID}
+                                            ComplectationName={item.ComplectationName}
+                                            CreateTime={item.CreateTime}
+                                            DateOfBith={item.DateOfBith}
+                                            DateOfDeath={item.DateOfDeath}
+                                            DocumentNumber={item.DocumentNumber}
+                                            ID={item.ID}
+                                            Name={item.Name}
+                                            OrderID={item.OrderID}
+                                            Price={item.Price}
+                                            ServiceDescription={item.ServiceDescription}
+                                            ServiceID={item.ServiceID}
+                                            ServiceTitle={item.ServiceTitle}
+                                            ServiceType={item.ServiceType}
+                                            UserID={item.UserID}
+                                            images={item.images}
+                                            userData={item.userData}
+                                            openDetail={openDetail}/>
                                         </div>
                                     ))
-                                ) : null
+                                ) : <EmptyList text={'Ничего не найдено'}/>
                             }
                         </div>
                         <div className="UsersPage__body_action">
                             <div className="UsersPage__body_action_item"><Button text={'Отменить выделение'} size={'sm'}/></div>
                             <div className="UsersPage__body_action_item"><Button text={'Выделить все'} size={'sm'}/></div>
-                            <div className="UsersPage__body_action_item"><Button onClick={openPush} text={'Отправить Push-уведомление'} size={'sm'}/></div>
+                            <div className="UsersPage__body_action_item"><Button onClick={list?.length > 0 ? openPush : null} text={'Отправить Push-уведомление'} size={'sm'}/></div>
                         </div>
                     </div>
                 </div>

@@ -4,14 +4,38 @@ import OrdersHead from './components/OrdersHead/OrdersHead';
 import OrdersInd from './components/OrdersInd/OrdersInd';
 import OrdersList from './components/OrdersList/OrdersList';
 import authService from '../../service/authService';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 const as = new authService();
 
 
 
 const OrdersPage = () => {
+    const {token} = useSelector(state => state);
+    const [stat, setStat] = useState({})
+    const [list, setList] = useState([])
+
+    useEffect(() => {
+        const data = {
+            list_begin: 0,
+            list_limit: 10,
+            page: 1,
+            sortby: 'CreateTime|DESC',
+            this_day: 0,
+            id: '',
+            phone: '79885650038',
+            period: moment(Date.now()).format('DD-MM-YYYY')
+        }
+        if(token) {
+            as.oredrs(token).then(res => {
+                setStat(res.statistics)
+                setList(res.orders)
+                console.log(res)
+            })
+        }
+    }, [token])
     
     return (
         <div className="OrdersPage page">
@@ -20,8 +44,8 @@ const OrdersPage = () => {
                 <div className="OrdersPage__in">
                     <div className="OrdersPage__body main">
                         <OrdersHead/>
-                        <OrdersInd/>
-                        <OrdersList/>
+                        <OrdersInd data={stat}/>
+                        <OrdersList list={list}/>
                     </div>
                 </div>
             </div>

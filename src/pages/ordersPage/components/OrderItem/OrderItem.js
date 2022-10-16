@@ -2,7 +2,31 @@ import './OrderItem.scss';
 import { Row, Col } from 'antd';
 
 
-const OrderItem = ({variant, openDetail, openChat}) => {
+const OrderItem = ({
+    variant, 
+    openDetail, 
+    openChat,
+    BundleID,
+    CompanyID,
+    ComplectationID,
+    ComplectationName,
+    CreateTime,
+    DateOfBith,
+    DateOfDeath,
+    DocumentNumber,
+    ID,
+    Name,
+    OrderID,
+    Price,
+    ServiceDescription,
+    ServiceID,
+    ServiceTitle,
+    ServiceType,
+    UserID,
+    images,
+    userData
+
+}) => {
 
     const variantHandle = () => {
         switch(variant) {
@@ -20,8 +44,8 @@ const OrderItem = ({variant, openDetail, openChat}) => {
                 <Col span={20}>
                     <div className="OrderItem__main" onClick={openDetail}>
                         <div className="OrderItem__info">
-                            <div className="OrderItem__info_item">Борисова Снежана</div>
-                            <div className="OrderItem__info_item">7 495 755-69-83</div>
+                            <div className="OrderItem__info_item">{userData[0]?.Name}</div>
+                            <div className="OrderItem__info_item">{userData[0]?.Phone}</div>
                         </div>
                         <div className="OrderItem__body">
                             <div className="OrderItem__body_item">
@@ -30,11 +54,11 @@ const OrderItem = ({variant, openDetail, openChat}) => {
                             </div>
                             <div className="OrderItem__body_item">
                                 <div className="OrderItem__body_item_name">Дата заказа:</div>
-                                <div className="OrderItem__body_item_value">24.04.2022 12:30</div>
+                                <div className="OrderItem__body_item_value">{CreateTime}</div>
                             </div>
                             <div className="OrderItem__body_item">
                                 <div className="OrderItem__body_item_name">Сумма заказа:</div>
-                                <div className="OrderItem__body_item_value">100 000 ₽</div>
+                                <div className="OrderItem__body_item_value">{Price} ₽</div>
                             </div>
                         </div>
                     </div>
