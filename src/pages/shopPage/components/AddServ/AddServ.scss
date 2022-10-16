@@ -1,0 +1,118 @@
+.AddServ {
+
+    .ant-modal-body {
+        padding-left: 35px !important;
+        padding-right: 35px !important;
+    }
+    &__head {
+        text-align: center;
+    }
+
+    &__body {
+
+        &_action {
+
+            .Button {
+                width: 100%;
+            }
+        }
+
+        &_ff {
+            height: 100%;
+            border-radius: 20px;
+            background-color: var(--gray_border);
+            overflow: hidden;
+            height: 198px;
+            
+            &_image {
+                width: 100%;
+                height: 100%;
+                // overflow: hidden;
+                
+                img {
+                    object-fit: cover;
+                    display: flex;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            
+            input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                pointer-events: none;
+                touch-action: none;
+                visibility: hidden;
+            }
+
+            &_body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+                &_icon {
+                    color: #888888;
+                    font-size: 40px;
+                    line-height: 40px;
+                    margin-bottom: 10px;
+                }
+
+                .Button {
+                    pointer-events: none;
+                }
+            }
+        }
+
+        &_prev {
+
+            border-radius: 15px;
+            overflow: hidden;
+
+            width: 100%;
+            height: 170px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: flex;
+            }
+        }
+
+        &_add {
+            width: 100%;
+            height: 170px;
+            background-color: var(--aqua);
+            border-radius: 15px;
+            
+
+            input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                pointer-events: none;
+                touch-action: none;
+                visibility: hidden;
+            }
+
+            &_body {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 50px;
+                line-height: 50px;
+                color: #fff;
+                cursor: pointer;
+                
+            }
+        }
+    }
+}

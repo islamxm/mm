@@ -1,0 +1,50 @@
+.Complects {
+
+    &__head {
+        font-weight: 600;
+        font-size: 26px;
+        line-height: 30px;
+        color: #636363;
+        margin-bottom: 20px;
+    }
+
+    &__body {
+        
+
+        &_item {
+            display: flex;
+            margin-left: -3px;
+            margin-right: -3px;
+            margin-bottom: 10px;
+
+            &_del {
+                width: 56px;
+                height: 56px;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--light_red);
+                color: #fff;
+                font-size: 30px;
+                line-height: 30px;
+            }
+        }
+    }
+
+    &__add {
+
+        &_btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--aqua);
+            border-radius: 100%;
+            width: 63px;
+            height: 63px;
+            color: #fff;
+            font-size: 25px;
+            line-height: 25px;
+        }
+    }
+}

@@ -8,19 +8,23 @@ import UsersPage from '../pages/usersPage/UsersPage';
 import ChatPage from '../pages/chatPage/ChatPage';
 import FaqPage from '../pages/faqPage/FaqPage';
 import NewOrdersPage from '../pages/newOrdersPage/NewOrdersPage';
+import ShopPageSub from '../pages/shopPage/ShopPageSub';
+import ShopPageServ from '../pages/shopPage/ShoPageServ';
 
 const App = () => {
     return (
         <div className="App">
             <Routes>
                 <Route path='/auth' element={<AuthPage/>}/>
-                <Route path='/orders' element={<OrdersPage/>}/>
-                <Route path='/orders/new' element={<NewOrdersPage/>}/>
-                <Route path='/stat' element={<StatPage/>}/>
-                <Route path='/shop' element={<ShopPage/>}/>
-                <Route path='/users' element={<UsersPage/>}/>
-                <Route path='/chat' element={<ChatPage/>}/>
-                <Route path='/faq' element={<FaqPage/>}/>
+                <Route path='/orders' element={<CheckAuth><OrdersPage/></CheckAuth>}/>
+                <Route path='/orders/new' element={<CheckAuth><NewOrdersPage/></CheckAuth>}/>
+                <Route path='/stat' element={<CheckAuth><StatPage/></CheckAuth>}/>
+                <Route path='/shop' element={<CheckAuth><ShopPage/></CheckAuth>}/>
+                <Route path='/shop/:categoryId' element={<CheckAuth><ShopPageSub/></CheckAuth>}/>
+                <Route path='/shop/:categoryId/:subId' element={<CheckAuth><ShopPageServ/></CheckAuth>}/>
+                <Route path='/users' element={<CheckAuth><UsersPage/></CheckAuth>}/>
+                <Route path='/chat' element={<CheckAuth><ChatPage/></CheckAuth>}/>
+                <Route path='/faq' element={<CheckAuth><FaqPage/></CheckAuth>}/>
             </Routes>
         </div>
     )

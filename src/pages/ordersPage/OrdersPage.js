@@ -3,8 +3,16 @@ import Header from '../../components/Header/Header';
 import OrdersHead from './components/OrdersHead/OrdersHead';
 import OrdersInd from './components/OrdersInd/OrdersInd';
 import OrdersList from './components/OrdersList/OrdersList';
+import authService from '../../service/authService';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+const as = new authService();
+
+
 
 const OrdersPage = () => {
+    
     return (
         <div className="OrdersPage page">
             <Header/>

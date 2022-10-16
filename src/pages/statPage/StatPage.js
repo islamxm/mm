@@ -9,7 +9,7 @@ const StatPage = () => {
             <div className="container">
                 <div className="StatPage__in">
                     <div className="StatPage__body main">
-
+                            
                     </div>
                 </div>
             </div>

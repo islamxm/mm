@@ -1,4 +1,6 @@
 import './Button.scss';
+import {LoadingOutlined} from '@ant-design/icons';
+
 
 const Button = ({
     disabled,
@@ -40,9 +42,25 @@ const Button = ({
         }
     }
 
+    const loadHandle = () => {
+        if(load) {
+            return ' load '
+        } else {
+            return ''
+        }
+    }
+    
+
 
     return (
-        <button onClick={onClick} style={style} className={"Button" + variantHandle() + sizeHandle()} type={type} disabled={disabled}>
+        <button onClick={onClick} style={style} className={"Button" + variantHandle() + sizeHandle() + loadHandle()} type={type} disabled={disabled}>
+            {
+                load ? (
+                    <div className="Button__load">
+                        <LoadingOutlined/>
+                    </div>
+                ) : null
+            }
             <span className="Button__text">{text}</span>
         </button>
     )

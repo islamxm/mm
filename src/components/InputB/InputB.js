@@ -10,7 +10,10 @@ const InputB = ({
     placeholder,
     name,
     inputStyle,
-    wrapStyle
+    wrapStyle,
+    type,
+    size,
+    readOnly
 }) => {
 
     const isError = () => {
@@ -29,10 +32,23 @@ const InputB = ({
         }
     }
 
+    const sizeHandle = () => {
+        switch (size) {
+            case 'sm':
+                return ' sm '
+            case 'md':
+                return ' md '
+            case 'lg': 
+                return ' lg '
+            default:
+                return ' lg '
+        }
+    }
+
 
     return (
-        <div style={wrapStyle} className={"InputB" + isError() + isDisabled()}>
-            <input style={inputStyle} name={name} type="text" placeholder={placeholder} value={value} onChange={onChange} onBlur={onBlur}/>
+        <div style={wrapStyle} className={"InputB" + isError() + isDisabled() + sizeHandle()}>
+            <input type={type} readOnly={readOnly} style={inputStyle} name={name}  placeholder={placeholder} value={value} onChange={onChange} onBlur={onBlur}/>
         </div>
     )
 }

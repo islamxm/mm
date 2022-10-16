@@ -3,21 +3,24 @@ import InputB from '../../components/InputB/InputB';
 import Button from '../../components/Button/Button';
 import { Formik, Form } from 'formik';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import authService from '../../service/authService';
+import { useDispatch } from 'react-redux';
+import {tokenUpdate} from '../../store/actions';
 
 
+const LOCAL_STORAGE = window.localStorage;
 const as = new authService();
-
 const initForm = {
-    email: '',
+    login: '',
     password: ''
 }
 
 
 const AuthPage = () => {
-
-    const [emailError, setEmailError] = useState('')
-    const [passwordError, setPasswordError] = useState('')
+    const dispatch = useDispatch();
+    const nav = useNavigate();
+    const [error, setError] = useState('');
 
     return (
         <div className="AuthPage page">
@@ -32,19 +35,39 @@ const AuthPage = () => {
                             initialValues={initForm}
                             onSubmit={(values, {setSubmitting}) => {
                                 console.log(values)
+                                as.auth(values).then(res => {
+                                    if(res.error) {
+                                        setError(res.message)
+                                    } else {
+                                        setError('')
+                                        dispatch(tokenUpdate(res.data.token))
+                                        LOCAL_STORAGE.setItem('token-memories-manager', res.data.token)
+                                        nav('/orders', {replace: true})
+                                    }
+                                })
                                 
                             }}
                             >
                             {
                                 ({values, errors, handleBlur, handleChange, isSubmitting}) => (
                                     <Form className='AuthPage__body_form'>
+                                        {
+                                            error ? (
+                                                <div className="AuthPage__body_form_error" style={{color: 'var(--red)', marginBottom: 10}}>
+                                                    {error}
+                                                </div>
+                                            ) : null
+                                        }
                                         <div className="AuthPage__body_row">
                                             <InputB 
-                                                name={'email'}
+                                                name={'login'}
                                                 value={values.email}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                placeholder={'Логин'}/>
+                                                placeholder={'Логин'}
+                                                error={error}
+                                                type={'text'}
+                                                />
                                         </div>
                                         <div className="AuthPage__body_row">
                                             <InputB 
@@ -52,7 +75,10 @@ const AuthPage = () => {
                                                 value={values.password}
                                                 onChange={handleChange}
                                                 onBlur={handleBlur}
-                                                placeholder={'Пароль'}/>
+                                                placeholder={'Пароль'}
+                                                error={error}
+                                                type={'password'}
+                                                />
                                         </div>
                                         <div className="AuthPage__body_action">
                                             <Button load={isSubmitting} style={{paddingLeft: 130, paddingRight: 130}} text={'Войти'} type={'submit'} variant={'primary'}/>

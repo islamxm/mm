@@ -1,5 +1,5 @@
 .InputB {
-
+    // width: 100%;
     input {
         padding: 20px 30px;
         background-color: var(--gray);
@@ -12,7 +12,7 @@
         transition: all .3s ease;
         outline: none;
         border-radius: 52px;
-
+        
         &::placeholder {
             color: var(--dark_gray);
 
@@ -33,5 +33,17 @@
 .InputB.error {
     input {
         border-color: var(--red) !important;
+    }
+}
+
+.InputB.sm {
+
+    input {
+        padding: 15px 20px;
+        font-size: 18px;
+        line-height: 22px;
+        &:read-only {
+            pointer-events: none;
+        }
     }
 }

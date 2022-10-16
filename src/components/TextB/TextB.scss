@@ -1,0 +1,27 @@
+.TextB {
+
+    textarea {
+        resize: none;
+        padding: 20px;
+        color: var(--text);
+        font-size: 18px;
+        line-height: 22px;
+        font-weight: 500;
+        background-color: var(--gray);
+        border: 2px solid var(--gray_border);
+        display: block;
+        width: 100%;
+        transition: all .3s ease;
+        outline: none;
+        border-radius: 20px;
+        height: 390px;
+
+        &::placeholder {
+            color: #9C9C9C;
+        }
+
+        &:focus {
+            border-color: var(--aqua);
+        }
+    }
+}

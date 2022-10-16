@@ -8,17 +8,17 @@ import ShopAdd from './components/ShopAdd/ShopAdd';
 import AddCategory from './components/AddCategory/AddCategory';
 import useModal from '../../hooks/useModal';
 import EditCategory from './components/AddCategory/EditCategory';
+import { useParams } from 'react-router-dom';
 
 
-const mock = [1,2,3]
 
 const as = new authService();
 
 
-const ShopPage = () => {
+const ShopPageSub = () => {
     const {token} = useSelector(state => state);
     const [list, setList] = useState([]);
-    const {visible, hideModal, showModal} = useModal()
+    const {categoryId} = useParams();
 
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -33,17 +33,17 @@ const ShopPage = () => {
     }
 
     useEffect(() => {
-        if(token) {
-            as.getCategories(token).then(res => {
+        if(token && categoryId) {
+            as.getSubcategory(token, categoryId).then(res => {
                 console.log(res)
                 setList(res)
             })
         }
-    }, [token])
+    }, [token, categoryId])
 
-    const deleteCategory = (categoryId) => {
+    const deleteSubcategory = (subId) => {
         if(token) {
-            as.deleteCategory(token, categoryId).then(res => {
+            as.deleteSubcategory(token, categoryId, subId).then(res => {
                 console.log(res)
                 setList(res)
             })
@@ -59,8 +59,8 @@ const ShopPage = () => {
     return (
         <div className="ShopPage page">
             <Header/>
-            <AddCategory updateList={setList} visible={add} close={closeAdd}/>
-            <EditCategory currentList={list} updateList={setList} visible={edit} id={editId} close={closeEdit}/>
+            <AddCategory id={categoryId} updateList={setList} visible={add} close={closeAdd}/>
+            <EditCategory categoryId={categoryId} sub={true} currentList={list} updateList={setList} visible={edit} id={editId} close={closeEdit}/>
             <div className="container">
                 <div className="ShopPage__in">
                     <div className="ShopPage__body main">
@@ -74,9 +74,9 @@ const ShopPage = () => {
                                                 name={item.Name} 
                                                 id={item.ID} 
                                                 pic={item.PicURL}
-                                                del={deleteCategory}
+                                                del={deleteSubcategory}
                                                 edit={selectEditId}
-                                                link={`/shop/${item.ID}`}
+                                                link={`/shop/${categoryId}/${item.ID}`}
                                                 />
                                         </div>
                                     ))
@@ -84,7 +84,7 @@ const ShopPage = () => {
                                 
                             }
                             <div className="ShopPage__body_item">
-                            <ShopAdd onClick={openAdd} text={'Добавить категорию'}/>
+                            <ShopAdd onClick={openAdd} text={'Добавить подкатегорию'}/>
                             </div>
                         </div>
                     </div>
@@ -94,4 +94,4 @@ const ShopPage = () => {
     )
 }
 
-export default ShopPage;
+export default ShopPageSub;

@@ -1,0 +1,25 @@
+.ShopPage {
+
+    &__body {
+
+        &_head {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        &_list {
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+
+        &_item {
+            margin: 0 10px;
+            margin-bottom: 20px;
+            width: calc((100% / 6) - 20px);
+            height: 160px;
+
+        }
+    }
+}
