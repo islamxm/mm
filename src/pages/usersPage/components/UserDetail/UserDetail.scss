@@ -1,0 +1,97 @@
+.UserDetail {
+
+    &__name {
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 500;
+        font-size: 36px;
+        line-height: 42px;
+    }
+    &__body {
+
+        &_docs {
+            margin-bottom: 30px;
+
+            &_head {
+                font-size: 24px;
+                line-height: 28px;
+                margin-bottom: 20px;
+            }   
+
+            &_list {
+                display: flex;
+                flex-wrap: wrap;
+                // overflow-x: scroll;
+                width: 100%;
+            }
+
+            &_item {
+                width: 125px;
+                flex: 0 0 auto;
+                height: 90px;
+                margin-bottom: 10px;
+                margin-right: 15px;
+
+                &_add {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 15px;
+                    background-color: var(--aqua);
+                    color: #fff;
+                    font-size: 30px;
+                    line-height: 30px;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        &_content {
+            margin-bottom: 40px;
+
+            &_info {
+
+                &_item {
+                    margin-bottom: 20px;
+
+                    &_name {
+                        font-weight: 400;
+                        font-size: 24px;
+                        line-height: 28px;
+                        margin-bottom: 5px;
+                        color: #575757;
+                    }
+
+                    &_value {
+                        font-weight: 500;
+                        font-size: 24px;
+                        line-height: 28px;
+                    }
+                }
+            }
+
+            &_orders {
+
+                &_name {
+                    margin-bottom: 25px;
+                }
+
+                &_item {
+                    height: 145px;
+                }
+            }
+        }
+
+        &_action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &_item {
+                margin: 0 5px;
+
+            }
+        }
+    }
+}

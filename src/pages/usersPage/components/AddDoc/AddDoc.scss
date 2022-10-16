@@ -1,0 +1,55 @@
+.AddDoc {
+
+    &__head {
+        text-align: center;
+    }
+
+    &__body {
+
+        &_row {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &_upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                visibility: hidden;
+                pointer-events: none;
+                touch-action: none;
+            }
+
+            &_el {
+                width: 144px;
+                height: 115px;
+                border-radius: 15px;
+                background-color: var(--aqua);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 40px;
+                line-height: 40px;
+                cursor: pointer;
+            }
+
+            &_file {
+                margin-top: 10px;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 25px;
+                color: var(--dark_gray);
+                width: 100%;
+                white-space: nowrap;
+            }
+        }
+    }
+}

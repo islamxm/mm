@@ -1,0 +1,59 @@
+.UsersPage {
+
+    &__body {
+
+        &_head {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        &_city {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        &_search {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        &_count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+
+            &_name {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 21px;
+                margin-right: 40px;
+            }
+
+            &_el {
+                width: 360px;
+            }
+        }
+
+        &_list {
+            margin-bottom: 60px;
+        }
+
+        &_item {
+            margin-bottom: 15px;
+        }
+
+        &_action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &_item {
+                margin: 0 5px;
+            }
+        }
+    }
+}
