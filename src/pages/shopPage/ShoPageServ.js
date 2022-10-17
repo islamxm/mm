@@ -69,9 +69,7 @@ const ShopPageServ = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(list)
-    }, [list])
+
 
 
 

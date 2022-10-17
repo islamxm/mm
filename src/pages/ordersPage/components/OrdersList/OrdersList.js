@@ -10,21 +10,130 @@ import moment from 'moment';
 import EmptyList from '../../../../components/EmptyList/EmptyList';
 import Button from '../../../../components/Button/Button';
 
+
+
 const as = new authService();
 const mock = [1, 2, 3, 4];
 
-const OrdersList = ({list}) => {
+const OrdersList = () => {
+    const [selected, setSelected] = useState({})
     const {visible, hideModal, showModal} = useModal()
+    const [search, setSearch] = useState('')
+    const {token} = useSelector(state => state);
+    const [list, setList] = useState([]);
+    const [load, setLoad] = useState(false);
 
+
+    useEffect(() => {
+        // const data = {
+        //     list_begin: 0,
+        //     list_limit: 10,
+        //     page: 1,
+        //     sortby: 'CreateTime|DESC',
+        //     this_day: 0,
+        //     id: '',
+        //     phone: search,
+        //     period: 'year'
+        // }
+        if(token) {
+
+            as.oredrs(token).then(res => {
+                setList(res.orders)
+            })
+        }
+    }, [token])
+
+
+    const selectedHandle = (BundleID,
+        CompanyID,
+        ComplectationID,
+        ComplectationName,
+        CreateTime,
+        DateOfBith,
+        DateOfDeath,
+        DocumentNumber,
+        ID,
+        Name,
+        OrderID,
+        Price,
+        ServiceDescription,
+        ServiceID,
+        ServiceTitle,
+        ServiceType,
+        UserID,
+        images,
+        userData) => {
+        setSelected({
+            BundleID,
+            CompanyID,
+            ComplectationID,
+            ComplectationName,
+            CreateTime,
+            DateOfBith,
+            DateOfDeath,
+            DocumentNumber,
+            ID,
+            Name,
+            OrderID,
+            Price,
+            ServiceDescription,
+            ServiceID,
+            ServiceTitle,
+            ServiceType,
+            UserID,
+            images,
+            userData
+        })
+
+        showModal()
+    }
+
+    const searchHandle = (e) => {
+        setSearch(e.target.value)
+    }
+
+    const onSearch = () => {
+        setLoad(true)
+        as.ordersPhone(token, search).then(res => {
+            setList(res.orders)
+        }).finally(_ => {
+            setLoad(false)
+        })
+    }
+
+    useEffect(() => {
+        console.log(search)
+    }, [search])
 
     return (
         <div className="OrdersList">
-            <OrderDetail visible={visible} close={hideModal}/>
+            <OrderDetail 
+                BundleID={selected?.BundleID}
+                CompanyID={selected?.CompanyID}
+                ComplectationID={selected?.ComplectationID}
+                ComplectationName={selected?.ComplectationName}
+                CreateTime={selected?.CreateTime}
+                DateOfBith={selected?.DateOfBith}
+                DateOfDeath={selected?.DateOfDeath}
+                DocumentNumber={selected?.DocumentNumber}
+                ID={selected?.ID}
+                Name={selected?.Name}
+                OrderID={selected?.OrderID}
+                Price={selected?.Price}
+                ServiceDescription={selected?.ServiceDescription}
+                ServiceID={selected?.ServiceID}
+                ServiceTitle={selected?.ServiceTitle}
+                ServiceType={selected?.ServiceType}
+                UserID={selected?.UserID}
+                images={selected?.images}
+                userData={selected?.userData}
+                visible={visible} 
+                close={hideModal}/>
 
             <h2 className="OrdersList__head block_title">Поиск</h2>
             <div className="OrdersList__search">
-                <InputB wrapStyle={{width: 580}} placeholder={'Номер телефона'}/>
-                <Button text={'Поиск'} style={{marginLeft: 20}}/>
+                <InputB onChange={searchHandle} wrapStyle={{width: 580}} placeholder={'Номер телефона'}/>
+                <Button onClick={onSearch} load={load} disabled={!search} text={'Поиск'} style={{marginLeft: 20}}/>
             </div>
             <div className="OrdersList__body">
                 {   
@@ -51,7 +160,7 @@ const OrdersList = ({list}) => {
                                     UserID={item.UserID}
                                     images={item.images}
                                     userData={item.userData}
-                                    openDetail={showModal}/>
+                                    openDetail={selectedHandle}/>
                             </div>
                         ))
                     ) : (

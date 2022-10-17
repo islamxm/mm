@@ -1,0 +1,32 @@
+.ChatUser {
+    padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all .3s ease;
+
+    &:hover {
+        background-color: #DEDEDE;
+    }
+    &__name {
+
+    }
+
+    &__not {
+        border-radius: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+        background-color: var(--red);
+        color: #fff;
+        font-size: 10px;
+        line-height: 10px;
+        font-weight: 500;
+    }
+}
+
+.ChatUser.active {
+    background-color: #C1DCE8;
+}

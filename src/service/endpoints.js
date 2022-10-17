@@ -19,6 +19,10 @@ const endpoints = {
     getFaq: `${BASE_DOMAIN}/questionanswer.php`,
     editFaq: `${BASE_DOMAIN}/questionanswer.php?`,
     stat: `${BASE_DOMAIN}/statistics.php?`,
+    chat: `${BASE_DOMAIN}/chat.php`,
+    chatDetail: `${BASE_DOMAIN}/chat.php?`,
+    chatCreate: `${BASE_DOMAIN}/chat.php?`,
+    push: `${BASE_DOMAIN}/push.php`,
     
 }
 

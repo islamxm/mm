@@ -31,8 +31,6 @@ const OrdersPage = () => {
         if(token) {
             as.oredrs(token).then(res => {
                 setStat(res.statistics)
-                setList(res.orders)
-                console.log(res)
             })
         }
     }, [token])
@@ -45,7 +43,7 @@ const OrdersPage = () => {
                     <div className="OrdersPage__body main">
                         <OrdersHead/>
                         <OrdersInd data={stat}/>
-                        <OrdersList list={list}/>
+                        <OrdersList/>
                     </div>
                 </div>
             </div>

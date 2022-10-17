@@ -6,7 +6,30 @@ import OrderDetailItem from '../OrderDetailItem/OrderDetailItem';
 import Button from '../../../../components/Button/Button';
 
 
-const OrderDetail = ({visible, close, newOrder}) => {
+const OrderDetail = ({
+    visible, 
+    close, 
+    newOrder,
+    BundleID,
+    CompanyID,
+    ComplectationID,
+    ComplectationName,
+    CreateTime,
+    DateOfBith,
+    DateOfDeath,
+    DocumentNumber,
+    ID,
+    Name,
+    OrderID,
+    Price,
+    ServiceDescription,
+    ServiceID,
+    ServiceTitle,
+    ServiceType,
+    UserID,
+    images,
+    userData
+}) => {
     
     const closeHandle = () => {
         close()
@@ -16,12 +39,17 @@ const OrderDetail = ({visible, close, newOrder}) => {
         <Modal width={1000} open={visible} onCancel={closeHandle} className="OrderDetail modal">
             <button onClick={closeHandle} className="modal__close"><GrClose/></button>
             <div className="OrderDetail__head">
-                Номер заказа: 3453
+                Номер заказа: {OrderID}
             </div>
             <div className="OrderDetail__body">
                 <div className="OrderDetail__body_list">
                     <div className="OrderDetail__body_item">
-                        <OrderDetailItem/>
+                        <OrderDetailItem
+                            name={ServiceTitle}
+                            price={Price}
+                            complectName={ComplectationName}
+                            image={images && images.length > 0 ? images[0] : null}
+                            />
                     </div>
                 </div>
                 <div className="OrderDetail__body_main">
@@ -29,33 +57,54 @@ const OrderDetail = ({visible, close, newOrder}) => {
                         <Col span={12}>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Дата заказа:</div>
-                                <div className="OrderDetail__body_main_item_value">24.04.2022 12:30</div>
+                                <div className="OrderDetail__body_main_item_value">{CreateTime}</div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Сумма заказа:</div>
-                                <div className="OrderDetail__body_main_item_value">9 000 ₽</div>
+                                <div className="OrderDetail__body_main_item_value">{Price} ₽</div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Ф.И.О</div>
-                                <div className="OrderDetail__body_main_item_value">Борисова Снежана Евгеньевна</div>
+                                <div className="OrderDetail__body_main_item_value">
+                                    {
+                                        userData && userData.length > 0 ? (
+                                            userData[0].Name
+                                        ) : ('-')
+                                    }
+                                </div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Адрес</div>
-                                <div className="OrderDetail__body_main_item_value">Москва, пер. Садовый, д. 3</div>
+                                <div className="OrderDetail__body_main_item_value">
+                                    {
+                                        userData && userData.length > 0 && userData[0].Adress ? (
+                                            userData[0].Adress
+                                        ) : ('-')
+                                    }
+                                </div>
                             </div>
-                            <div className="OrderDetail__body_main_item">
-                                <div className="OrderDetail__body_main_item_name">Номер телефона</div>
-                                <div className="OrderDetail__body_main_item_value">89512456337881</div>
-                            </div>
+
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Паспортные данные</div>
-                                <div className="OrderDetail__body_main_item_value">3013 955412</div>
+                                <div className="OrderDetail__body_main_item_value">
+                                    {
+                                        userData && userData.length > 0 && userData[0].Passport? (
+                                            userData[0].Passport
+                                        ) : ('-')
+                                    }
+                                </div>
                             </div>
                         </Col>
                         <Col span={12}>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Номер телефона</div>
-                                <div className="OrderDetail__body_main_item_value">7 495 755-69-83</div>
+                                <div className="OrderDetail__body_main_item_value">
+                                    {
+                                        userData && userData.length > 0 ? (
+                                            userData[0].Phone
+                                        ) : ('-')
+                                    }
+                                </div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Данные о погибшем</div>
@@ -63,19 +112,19 @@ const OrderDetail = ({visible, close, newOrder}) => {
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Ф.И.О</div>
-                                <div className="OrderDetail__body_main_item_value">Борисов Виктор Станиславович</div>
+                                <div className="OrderDetail__body_main_item_value">{Name}</div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Дата рождения</div>
-                                <div className="OrderDetail__body_main_item_value">24.11.1945</div>
+                                <div className="OrderDetail__body_main_item_value">{DateOfBith}</div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Дата смерти</div>
-                                <div className="OrderDetail__body_main_item_value">16.03.2022</div>
+                                <div className="OrderDetail__body_main_item_value">{DateOfDeath}</div>
                             </div>
                             <div className="OrderDetail__body_main_item">
                                 <div className="OrderDetail__body_main_item_name">Номер с-ва о смерти и дата выдачи (если есть)</div>
-                                <div className="OrderDetail__body_main_item_value">2386548349173 от 16.03.2022</div>
+                                <div className="OrderDetail__body_main_item_value">{DocumentNumber}</div>
                             </div>
                         </Col>
                     </Row>

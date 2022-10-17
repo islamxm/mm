@@ -18,7 +18,50 @@ const NewOrdersPage = () => {
     const {visible, hideModal, showModal} = useModal()
     const {token} = useSelector(state => state)
     const [list, setList] = useState([])
+    const [selected, setSelected] = useState({})
+    const selectedHandle = (BundleID,
+        CompanyID,
+        ComplectationID,
+        ComplectationName,
+        CreateTime,
+        DateOfBith,
+        DateOfDeath,
+        DocumentNumber,
+        ID,
+        Name,
+        OrderID,
+        Price,
+        ServiceDescription,
+        ServiceID,
+        ServiceTitle,
+        ServiceType,
+        UserID,
+        images,
+        userData) => {
+        setSelected({
+            BundleID,
+            CompanyID,
+            ComplectationID,
+            ComplectationName,
+            CreateTime,
+            DateOfBith,
+            DateOfDeath,
+            DocumentNumber,
+            ID,
+            Name,
+            OrderID,
+            Price,
+            ServiceDescription,
+            ServiceID,
+            ServiceTitle,
+            ServiceType,
+            UserID,
+            images,
+            userData
+        })
 
+        showModal()
+    }
     useEffect(() => {
         if(token) {
             as.oredrs(token).then(res => {
@@ -32,7 +75,29 @@ const NewOrdersPage = () => {
         <div className="NewOrdersPage page">
             <Header/>
             <BackNav title={'Новые заказы'}/>
-            <OrderDetail newOrder={true} visible={visible} close={hideModal}/>
+            <OrderDetail 
+                BundleID={selected?.BundleID}
+                CompanyID={selected?.CompanyID}
+                ComplectationID={selected?.ComplectationID}
+                ComplectationName={selected?.ComplectationName}
+                CreateTime={selected?.CreateTime}
+                DateOfBith={selected?.DateOfBith}
+                DateOfDeath={selected?.DateOfDeath}
+                DocumentNumber={selected?.DocumentNumber}
+                ID={selected?.ID}
+                Name={selected?.Name}
+                OrderID={selected?.OrderID}
+                Price={selected?.Price}
+                ServiceDescription={selected?.ServiceDescription}
+                ServiceID={selected?.ServiceID}
+                ServiceTitle={selected?.ServiceTitle}
+                ServiceType={selected?.ServiceType}
+                UserID={selected?.UserID}
+                images={selected?.images}
+                userData={selected?.userData}
+                newOrder={true} 
+                visible={visible} 
+                close={hideModal}/>
             <div className="container">
                 <div className="NewOrdersPage__in">
                     <div className="NewOrdersPage__body main">
@@ -61,7 +126,7 @@ const NewOrdersPage = () => {
                                                 UserID={item.UserID}
                                                 images={item.images}
                                                 userData={item.userData}
-                                                openDetail={showModal} 
+                                                openDetail={selectedHandle} 
                                                 variant={'red'} />
                                         </div>
                                     ))

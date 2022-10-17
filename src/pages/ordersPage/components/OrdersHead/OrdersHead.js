@@ -11,8 +11,8 @@ const OrdersHead = () => {
     return (
         <div className="OrdersHead">
             <h2 className="OrdersHead__title block_title">Все заказы</h2>
-            <div className="OrdersHead__body">
-                <Row gutter={[15, 0]}>
+            {/* <div className="OrdersHead__body">
+                <Row gutter={[15, 0]} justify={'center'}>
                     <Col span={12}>
                         <Button style={{width: '100%'}} size={'sm'} text={'Выбор даты'} variant={'default'}/>
                     </Col>
@@ -20,7 +20,7 @@ const OrdersHead = () => {
                         <Button onClick={() => nav('/orders/new')} style={{width: '100%'}} size={'sm'} text={'Новые заказы'} variant={'primary'}/>
                     </Col>
                 </Row>
-            </div>
+            </div> */}
         </div>
     )
 }

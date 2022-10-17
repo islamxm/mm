@@ -4,6 +4,17 @@ const headers = {
     'Accept': 'application/json',
 }
 
+
+const checkAuth = async (response) => {
+    if(response.status === 401) {
+        window.location.replace(window.location.origin + '/auth')
+    } else {
+        return response.json()
+    }
+
+}
+
+
 class authService {
 
     auth = async (data) => {
@@ -20,9 +31,9 @@ class authService {
         }
     }
 
-    oredrs = async (token) => {
+    ordersPhone = async (token, phone) => {
         try {
-            let res = await fetch(endpoints.orders + `?phone=79885650038&period=year`, {
+            let res = await fetch(endpoints.orders + `?phone=${phone}`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -32,7 +43,28 @@ class authService {
                 }
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    oredrs = async (token) => {
+        console.log(endpoints.orders)
+        try {
+            let res = await fetch(endpoints.orders, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -50,7 +82,8 @@ class authService {
                 }
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -68,7 +101,8 @@ class authService {
                 },
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -87,7 +121,8 @@ class authService {
                 body: data
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -105,7 +140,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -125,7 +161,8 @@ class authService {
                 body: data
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -144,7 +181,8 @@ class authService {
                 }
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -161,7 +199,8 @@ class authService {
                 body: data
                 
             })
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -180,7 +219,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -197,7 +237,8 @@ class authService {
                 body: data
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -205,8 +246,9 @@ class authService {
 
 
     getServices = async (token, catId, id) => {
+        console.log(endpoints.getServices + `CategoryID=${catId}&ID=${id}`)
         try {
-            let res = await fetch(endpoints.getServices + `CategoryID=${catId}&ID=${id}`, {
+            let res = await fetch(endpoints.getServices + `id_category=${id}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -216,7 +258,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -234,7 +277,8 @@ class authService {
                 body: data
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -251,7 +295,8 @@ class authService {
                 body: data
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -267,7 +312,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -286,7 +332,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -306,7 +353,8 @@ class authService {
                 body: JSON.stringify(data)
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -324,7 +372,8 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -343,7 +392,8 @@ class authService {
                 body: JSON.stringify(data)
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
@@ -361,12 +411,109 @@ class authService {
                 mode: 'cors',
             })
 
-            return await res.json()
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    getStatCat = async (token, period, category) => {
+        try {
+            let res = await fetch(endpoints.stat + `period=${'year'}&category=${category}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    getChat = async (token) => {
+        try {
+            let res = await fetch(endpoints.chat, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+
+    getChatDetail = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.chatDetail + `ID=${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            const response = await checkAuth(res)
+            return response
         } catch(err) {
             console.log(err)
         }
     }
     
+    sendMessage = async (token, id, body) => {
+        try {
+            let res = await fetch(endpoints.chatCreate + `ID=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: JSON.stringify(body)
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    push = async (token, data) => {
+        try {
+            let res = await fetch(endpoints.push, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: JSON.stringify(data)
+            })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
 }
 
 export default authService;

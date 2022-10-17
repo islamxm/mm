@@ -51,8 +51,13 @@ const EditServ = ({visible, close, updateList, data}) => {
                     Price: item.Price
                 }
             }))
+            setImages(data?.images?.map(item => item.URL))
         }
     }, [data])
+
+    useEffect(() => {
+        console.log(images)
+    }, [images])
 
 
     const openCm = () => setCm(true)

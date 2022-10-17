@@ -1,0 +1,40 @@
+.ChatMes {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &__el {
+        width: 48%;
+
+        &_body {
+            padding: 10px;
+            border-radius: 15px;
+            font-size: 18px;
+            line-height: 22px;
+            background: #E9E9EB;
+            margin-bottom: 5px;
+        }
+
+        &_time {
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 125%;
+
+
+            color: #909093;
+        }
+    }
+}
+
+.ChatMes.mine {
+    justify-content: flex-end;
+
+    .ChatMes__el {
+
+        &_body {
+            background-color: var(--aqua);
+            color: #fff;
+        }
+    }
+}
