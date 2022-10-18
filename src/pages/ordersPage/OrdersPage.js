@@ -14,25 +14,7 @@ const as = new authService();
 
 const OrdersPage = () => {
     const {token} = useSelector(state => state);
-    const [stat, setStat] = useState({})
-
-    useEffect(() => {
-        const data = {
-            list_begin: 0,
-            list_limit: 10,
-            page: 1,
-            sortby: 'CreateTime|DESC',
-            this_day: 0,
-            id: '',
-            phone: '79885650038',
-            period: moment(Date.now()).format('DD-MM-YYYY')
-        }
-        if(token) {
-            as.orders(token).then(res => {
-                setStat(res.statistics)
-            })
-        }
-    }, [token])
+    
     
     return (
         <div className="OrdersPage page">
@@ -41,7 +23,7 @@ const OrdersPage = () => {
                 <div className="OrdersPage__in">
                     <div className="OrdersPage__body main">
                         <OrdersHead/>
-                        <OrdersInd data={stat}/>
+                        <OrdersInd/>
                         <OrdersList/>
                     </div>
                 </div>

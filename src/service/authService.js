@@ -420,8 +420,9 @@ class authService {
     }
 
     getStat = async (token, period) => {
+        console.log(endpoints.stat + `period=${period}`)
         try {
-            let res = await fetch(endpoints.stat + `period=${'year'}`, {
+            let res = await fetch(endpoints.stat + `period=${period}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -439,8 +440,9 @@ class authService {
     }
 
     getStatCat = async (token, period, category) => {
+        console.log('body', endpoints.stat + `period=${period}&category=${category}`)
         try {
-            let res = await fetch(endpoints.stat + `period=${'year'}&category=${category}`, {
+            let res = await fetch(endpoints.stat + `period=${period}&category=${category}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',

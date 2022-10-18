@@ -3,13 +3,26 @@ import {HiOutlineClipboardDocumentList} from 'react-icons/hi2';
 import {BiUserCircle} from 'react-icons/bi';
 import authService from '../../../../service/authService';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const as = new authService()
 
 const OrdersInd = ({data}) => {
-    
+    const {token} = useSelector(state => state);
+    const [old, setOld] = useState(0)
+    const [newO, setNewO] = useState(0)
+    const [total, setTotal] = useState(0)
 
+    useEffect(() => {
+        if(token) {
+            as.orders(token).then(res => {
+                console.log(res)
+                setTotal(res.statistics.total_count)
+                setNewO(res.statistics.total_count_new)
+                setOld(res.statistics.total_count_old)
+            })
+        }
+    }, [token])
 
     return (
         <div className="OrdersInd">
@@ -19,7 +32,7 @@ const OrdersInd = ({data}) => {
                         <HiOutlineClipboardDocumentList/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">{data?.total_count}</div>
+                        <div className="OrdersInd__body_item_info_value">{total}</div>
                         <div className="OrdersInd__body_item_info_name">Количество заказов</div>
                     </div>
                 </div>
@@ -28,7 +41,7 @@ const OrdersInd = ({data}) => {
                         <BiUserCircle/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">{data?.total_count_new}</div>
+                        <div className="OrdersInd__body_item_info_value">{newO}</div>
                         <div className="OrdersInd__body_item_info_name">Заказы от новых клиентов</div>
                     </div>
                 </div>
@@ -37,7 +50,7 @@ const OrdersInd = ({data}) => {
                         <BiUserCircle/>
                     </div>
                     <div className="OrdersInd__body_item_info">
-                        <div className="OrdersInd__body_item_info_value">{data?.total_count_old}</div>
+                        <div className="OrdersInd__body_item_info_value">{old}</div>
                         <div className="OrdersInd__body_item_info_name">Заказы тех кто уже делал заказ</div>
                     </div>
                 </div>

@@ -41,10 +41,11 @@ const StatInd = () => {
     const [dgData, setDgData] = useState({})
     const [statData, setStatData] = useState([])
 
-
+    
     useEffect(() => {
-        if(token) {
-            as.getStat(token).then(res => {
+        // console.log(period)
+        if(token && period) {
+            as.getStat(token, period).then(res => {
                 console.log(res)
                 setChartData(res.graph_data)
                 setDgData(res.percent_orders)

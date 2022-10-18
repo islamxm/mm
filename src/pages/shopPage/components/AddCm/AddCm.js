@@ -34,7 +34,8 @@ const AddCm = ({visible, close, save, servId}) => {
             const data = {
                 Name: name,
                 Price: price,
-                ServiceID: servId
+                // ServiceID: servId
+                ID: 0
             }
             save(data);
             closeHandle()

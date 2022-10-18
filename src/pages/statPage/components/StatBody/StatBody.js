@@ -19,13 +19,13 @@ const StatBody = () => {
 
     useEffect(() => {
         if(token && !id) {
-            as.getStat(token).then(res => {
+            as.getStat(token, 'year').then(res => {
              
                 setList(res.categoryes_stat)
             })
         }
         if(token && id) {
-            as.getStatCat(token, id).then(res => {
+            as.getStatCat(token, 'year', id).then(res => {
                 setList(res.categoryes_stat)
                 
             })

@@ -57,13 +57,18 @@ const EditServ = ({visible, close, updateList, data}) => {
             setDescr(data?.descr)
             setPrevs(data?.images?.map(item => item.URL))
             setComplects(data?.complect?.map((item) => {
-                return {
-                    Name: item.Name,
-                    Price: item.Price,
-                    ID: item.ID ? item.ID : 0,
-                    ServiceID: item.ServiceID ? item.ServiceID : 0
-
+                if(item.ServiceID && item.ID) {
+                    return {
+                        Name: item.Name,
+                        Price: item.Price,
+                        ID: item.ID,
+                        ServiceID: item.ServiceID
+    
+                    }
+                } else {
+                   
                 }
+                
             }))
             data?.images?.forEach(async item => {
                 createFile(item.URL).then(res => {
