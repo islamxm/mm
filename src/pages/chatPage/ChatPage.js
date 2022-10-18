@@ -99,7 +99,15 @@ const ChatPage = () => {
                                 {
                                     users && users.length > 0 ? (
                                         users.map((item, index) => (
-                                            <ChatUser phone={item.UserPhone} setCurrent={setCurrent} id={item.ID} name={item.UserName} not={0}/>
+                                            <div className="ChatPage__body_chat_side_item" key={index}>
+                                                <ChatUser 
+                                                    phone={item.UserPhone} 
+                                                    setCurrent={setCurrent} 
+                                                    id={item.ID} 
+                                                    name={item.UserName} 
+                                                    not={0}/>
+                                            </div>
+                                            
                                         ))
                                     ) : null
                                 }

@@ -84,8 +84,8 @@ const UserDetail = ({visible, close}) => {
                                         {
                                             mock && mock.length > 0 ? (
                                                 mock.map((item, index) => (
-                                                    <Col span={12}>
-                                                        <div className="UserDetail__body_content_orders_item" key={index}>
+                                                    <Col span={12} key={index}>
+                                                        <div className="UserDetail__body_content_orders_item">
                                                             <OrderCard name={'asdasd'} date={'adas'} price={'adsa'}/>
                                                         </div>
                                                     </Col>

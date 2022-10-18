@@ -23,8 +23,9 @@ const UsersPage = () => {
     const [push, setPush] = useState(false);
     const [list, setList] = useState([])
     const [phone, setPhone] = useState('')
-    const [phoneLoad, setPhoneLoad] = useState(false)
     const [city, setCity] = useState('')
+    const [phoneLoad, setPhoneLoad] = useState(false)
+    const [cityLoad, setCityLoad] = useState('')
     const [page, setPage] = useState(1);
     const [more, setMore] = useState(false)
     const [moreLoad, setMoreLoad] = useState(false)
@@ -82,6 +83,32 @@ const UsersPage = () => {
         setPhone(e.target.value);
     }
 
+    const cityHandle = (e) => {
+        setCity(e.target.value)
+    }
+
+    const citySubmit = () => {
+        setPage(1)
+        setCityLoad(true)
+        as.users(token, 1, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
+            if(res.users) {
+                setList(res.users)
+
+                if(res.users.length < 10) {
+                    setMore(false)
+                } else {
+                    setMore(true)
+                }
+            } else {
+                setList([])
+                setMore(false)
+            }
+        }).finally(_ => {
+            setCityLoad(false)
+        })
+    }
+
+
     const phoneSubmit = () => {
         setPage(1)
         setPhoneLoad(true)
@@ -138,12 +165,23 @@ const UsersPage = () => {
                 <div className="UsersPage__in">
                     <div className="UsersPage__body main">
                         <h2 className="UsersPage__body_head block_title">Пользователи приложения</h2>
-                        {/* <div className="UsersPage__body_city">
-                            <Button text={'Введите город'} variant={'primary'}/>
-                        </div> */}
                         <div className="UsersPage__body_search">
-                            <InputB onChange={phoneHandle} wrapStyle={{width: 580, marginRight: 20}} placeholder={'Номер телефона'}/>
-                            <Button load={phoneLoad} onClick={phoneSubmit}  text={'Показать'}/>
+                            <InputB 
+                                onChange={cityHandle}
+                                value={city} 
+                                wrapStyle={{width: 580, marginRight: 20}} 
+                                placeholder={'Введите город'}
+                                />
+                            <Button 
+                                load={cityLoad} 
+                                onClick={citySubmit}  
+                                text={'Показать'}
+                                variant={'primary'}
+                                />
+                        </div>
+                        <div className="UsersPage__body_search">
+                            <InputB value={phone} onChange={phoneHandle} wrapStyle={{width: 580, marginRight: 20}} placeholder={'Номер телефона'}/>
+                            <Button variant={'primary'} load={phoneLoad} onClick={phoneSubmit}  text={'Показать'}/>
                         </div>
                         <div className="UsersPage__body_count">
                             <div className="UsersPage__body_count_name">Количество заказов</div>

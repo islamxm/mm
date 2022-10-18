@@ -31,6 +31,25 @@ class authService {
         }
     }
 
+    logout = async (token) => {
+        try {
+            let res = await fetch(endpoints.auth + '?exit=1', {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            const response = await checkAuth(res)
+            return response
+
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     ordersPhone = async (token, phone, list_begin) => {
         console.log(endpoints.orders + `?phone=${phone}&list_begin=${list_begin}period='year'`)
 

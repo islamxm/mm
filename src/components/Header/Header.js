@@ -7,16 +7,39 @@ import {BsShopWindow} from 'react-icons/bs';
 import {HiUsers} from 'react-icons/hi';
 import {BsFillChatRightDotsFill} from 'react-icons/bs';
 import {BsFillQuestionCircleFill} from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import authService from '../../service/authService';
+import { useNavigate } from 'react-router-dom';
 
+
+const LOCAL_STORAGE = window.localStorage;
+
+const as = new authService()
 
 const Header = () => {
+    const nav = useNavigate();
+    const {token} = useSelector(state => state);
+
+
+    const logout = () => {
+        if(token) {
+            as.logout(token).then(res => {
+                if(!res.error) {
+                    LOCAL_STORAGE.removeItem('token-memories-manager')
+                    nav('/auth', {replace: true})
+                }
+            })
+        }
+    }
+
     return (
         <header className="Header">
             <div className="container">
                 <div className="Header__in">
                     <div className="Header__top">
                         <Link to={'/'} className="Header__top_logo">Memories Manager</Link>
-                        <button className="Header__top_logout">
+                        <button onClick={logout} className="Header__top_logout">
                             <ImExit/> <span className="Header__top_logout_text">Выход</span>
                         </button>
                     </div>

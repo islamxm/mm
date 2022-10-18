@@ -23,7 +23,7 @@ const endpoints = {
     chatDetail: `${BASE_DOMAIN}/chat.php?`,
     chatCreate: `${BASE_DOMAIN}/chat.php?`,
     push: `${BASE_DOMAIN}/push.php`,
-    users: `${BASE_DOMAIN}/users.php`
+    users: `${BASE_DOMAIN}/users.php`,
     
 }
 

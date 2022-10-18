@@ -43,7 +43,7 @@ const StatBody = () => {
                     {
                         list && list.length > 0 ? (
                             list.map((item, index) => (
-                                <Col span={8}>
+                                <Col span={8} key={index}>
                                     <StatItem 
                                         name={item.title} 
                                         servId={item.id} 
