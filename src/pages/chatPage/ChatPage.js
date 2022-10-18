@@ -26,6 +26,7 @@ const ChatPage = () => {
             as.getChat(token).then(res => {
                 console.log(res)
                 const cr = res.find(item => item.ID == userId);
+               
                 const obj = {
                     name: cr.UserName,
                     phone: cr.UserPhone

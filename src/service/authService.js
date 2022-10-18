@@ -31,9 +31,29 @@ class authService {
         }
     }
 
-    ordersPhone = async (token, phone) => {
+    ordersPhone = async (token, phone, list_begin) => {
+        console.log(endpoints.orders + `?phone=${phone}&list_begin=${list_begin}period='year'`)
+
         try {
-            let res = await fetch(endpoints.orders + `?phone=${phone}`, {
+            let res = await fetch(endpoints.orders + `?phone=${phone}&list_begin=${list_begin}period='year'`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    orders = async (token) => {
+        try {
+            let res = await fetch(endpoints.orders, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -50,10 +70,10 @@ class authService {
         }
     }
 
-    oredrs = async (token) => {
-        console.log(endpoints.orders)
+    ordersWithData = async (token, list_begin ) => {
+        
         try {
-            let res = await fetch(endpoints.orders, {
+            let res = await fetch(endpoints.orders + `?list_begin=${list_begin}&period=year`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {
@@ -399,9 +419,9 @@ class authService {
         }
     }
 
-    getStat = async (token, period, category) => {
+    getStat = async (token, period) => {
         try {
-            let res = await fetch(endpoints.stat + `period=${period}&category=${category}`, {
+            let res = await fetch(endpoints.stat + `period=${'year'}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json',
@@ -508,6 +528,26 @@ class authService {
                 mode: 'cors',
                 body: JSON.stringify(data)
             })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    users = async (token, page, phone, city, ordersStart, ordersEnd) => {
+        console.log(endpoints.users + `?list_limit=10&page=${page}&phone=${phone}&city=${city}&orders_count=${ordersStart};${ordersEnd}`)
+        try {
+            let res = await fetch(endpoints.users + `?list_limit=10&page=${page}&phone=${phone}&city=${city}&orders_count=${ordersStart};${ordersEnd}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
             const response = await checkAuth(res)
             return response
         } catch(err) {

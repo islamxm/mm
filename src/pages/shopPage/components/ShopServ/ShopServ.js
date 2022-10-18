@@ -1,12 +1,14 @@
 import './ShopServ.scss';
 import {FiEdit} from 'react-icons/fi';
 import img from '../../../../assets/img/product.png';
+import { useEffect } from 'react';
 
 const ShopServ = ({id, title, descr, subcat, complect, images, edit}) => {
 
     const editHandle = () => {
         edit(title, descr, subcat, complect, images, id)
     }
+
 
 
     return (

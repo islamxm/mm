@@ -19,6 +19,16 @@ import { useParams } from "react-router-dom";
 
 const as = new authService()
 
+async function createFile(url){
+    let response = await fetch(url);
+    let data = await response.blob();
+    let metadata = {
+      type: 'image/jpeg'
+    };
+    let file = new File([data], "img.jpg", metadata);
+    // ... do something with the file or return it
+    return await file
+  }
 
 
 
@@ -42,22 +52,34 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     useEffect(() => {
         if(data) {
+            console.log(data?.images)
             setName(data?.title)
             setDescr(data?.descr)
             setPrevs(data?.images?.map(item => item.URL))
             setComplects(data?.complect?.map((item) => {
                 return {
                     Name: item.Name,
-                    Price: item.Price
+                    Price: item.Price,
+                    ID: item.ID ? item.ID : 0,
+                    ServiceID: item.ServiceID ? item.ServiceID : 0
+
                 }
             }))
-            setImages(data?.images?.map(item => item.URL))
+            data?.images?.forEach(async item => {
+                createFile(item.URL).then(res => {
+                    setImages(state => {
+                        return [
+                            ...state,
+                            res
+                        ]
+                    })
+                })
+            })
+            // setImages(data?.images?.map(async item => createFile(item.URL).then(res => res)))
         }
     }, [data])
 
-    useEffect(() => {
-        console.log(images)
-    }, [images])
+
 
 
     const openCm = () => setCm(true)
@@ -75,7 +97,13 @@ const EditServ = ({visible, close, updateList, data}) => {
             message.error('Нельзя загрузить больше 3 картинок')
         } else {
             setImages(newArr)
-            let prevArr = newArr.map(item => URL.createObjectURL(item))
+            let prevArr = newArr.map(item => {
+                if(typeof(item) == 'object') {
+                    return URL.createObjectURL(item)
+                } else {
+                    return item
+                }
+            })
             setPrevs(prevArr)
         }
     }
@@ -102,6 +130,7 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     const onSubmit = () => {
         setLoad(true)
+        
         const data = new FormData();    
 
         data.append('ServiceTitle', name)
@@ -152,9 +181,10 @@ const EditServ = ({visible, close, updateList, data}) => {
         console.log(complects)
     }, [complects])
 
+
     return (
         <Modal width={830} open={visible} onCancel={closeHandle} className="modal AddServ">
-            <AddCm save={onAddComplect} visible={cm} close={closeCm}/>
+            <AddCm  servId={complects?.length > 0 ? complects[0]?.ServiceID : null} save={onAddComplect} visible={cm} close={closeCm}/>
             <button className="modal__close" onClick={closeHandle}><GrClose/></button>
             <h2 className="AddServ__head block_title">Редактирование услуги</h2>
             <div className="AddServ__body">
@@ -242,7 +272,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                 text={'Сохранить'} 
                                 variant={'primary'}
                                 size={'sm'}
-                                disabled={true}
+                                disabled={images?.length <= 0 || !name || !descr || complects?.length <= 0}
                                 onClick={onSubmit}
                                 load={load}
                                 />

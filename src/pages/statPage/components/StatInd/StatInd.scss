@@ -1,5 +1,5 @@
 .StatInd {
-
+    margin-bottom: 30px;
     &__top {
         margin-bottom: 20px;
     }
@@ -7,9 +7,13 @@
     &__body {
 
         &_chart {
-
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 1px 4px 7px rgba(13, 153, 232, 0.14);
+            border-radius: 28px;
+            padding: 15px;
             &_main {
-                height: 320px;
+                // height: 320px;
             }
 
             &_stat {
@@ -18,7 +22,11 @@
         }
 
         &_dg {
-
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+            box-shadow: 1px 4px 7px rgba(13, 153, 232, 0.14);
+            border-radius: 28px;
+            padding: 15px;
         }
     }
 }

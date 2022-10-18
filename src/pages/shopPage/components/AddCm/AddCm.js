@@ -7,7 +7,7 @@ import './AddCm.scss';
 import { useState, useEffect } from "react";
 
 
-const AddCm = ({visible, close, save}) => {
+const AddCm = ({visible, close, save, servId}) => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
 
@@ -19,13 +19,26 @@ const AddCm = ({visible, close, save}) => {
     }
 
     const saveHandle = () => {
-        const data = {
-            Name: name,
-            Price: price,
+        
+
+        if(!servId) {
+            const data = {
+                Name: name,
+                Price: price,
+            }
+            save(data);
+            closeHandle()
         }
 
-        save(data);
-        closeHandle()
+        if(servId) {
+            const data = {
+                Name: name,
+                Price: price,
+                ServiceID: servId
+            }
+            save(data);
+            closeHandle()
+        }
     }
 
     const closeHandle = () => {

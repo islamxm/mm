@@ -22,26 +22,38 @@ const OrdersList = () => {
     const {token} = useSelector(state => state);
     const [list, setList] = useState([]);
     const [load, setLoad] = useState(false);
+    const [more, setMore] = useState(false);
+    const [offset, setOffset] = useState(0);
 
 
     useEffect(() => {
-        // const data = {
-        //     list_begin: 0,
-        //     list_limit: 10,
-        //     page: 1,
-        //     sortby: 'CreateTime|DESC',
-        //     this_day: 0,
-        //     id: '',
-        //     phone: search,
-        //     period: 'year'
-        // }
+        const data = {
+            list_begin: 0,
+            list_limit: 10,
+            page: 1,
+            sortby: 'CreateTime|DESC',
+            this_day: 0,
+            id: '',
+            phone: search,
+            period: 'year'
+        }
         if(token) {
 
-            as.oredrs(token).then(res => {
+            as.ordersWithData(token, offset).then(res => {
                 setList(res.orders)
+
+                if(res.orders.length < 10) {
+                    setMore(false)
+                } else {
+                    setMore(true)
+                }
             })
         }
-    }, [token])
+    }, [token, offset])
+
+    const moreHandle = () => {
+        setOffset(state => state + 10)
+    }
 
 
     const selectedHandle = (BundleID,
@@ -90,20 +102,20 @@ const OrdersList = () => {
 
     const searchHandle = (e) => {
         setSearch(e.target.value)
+        setOffset(0)
     }
 
     const onSearch = () => {
         setLoad(true)
-        as.ordersPhone(token, search).then(res => {
+        as.ordersPhone(token, search, offset).then(res => {
             setList(res.orders)
+            console.log(res)
         }).finally(_ => {
             setLoad(false)
         })
     }
 
-    useEffect(() => {
-        console.log(search)
-    }, [search])
+
 
     return (
         <div className="OrdersList">
@@ -169,6 +181,16 @@ const OrdersList = () => {
                     
                 }
             </div>
+            {
+                
+            }
+            {
+                more ? (
+                    <div className="OrdersList__action">
+                        <Button onClick={moreHandle} variant={'primary'} text={'Загрузить еще'}/> 
+                    </div>
+                ) : null
+            }
         </div>
     )
 }

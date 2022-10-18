@@ -26,6 +26,7 @@ const App = () => {
                 <Route path='/orders' element={<CheckAuth><OrdersPage/></CheckAuth>}/>
                 <Route path='/orders/new' element={<CheckAuth><NewOrdersPage/></CheckAuth>}/>
                 <Route path='/stat' element={<CheckAuth><StatPage/></CheckAuth>}/>
+                <Route path='/stat/:id' element={<CheckAuth><StatPage/></CheckAuth>}/>
                 <Route path='/shop' element={<CheckAuth><ShopPage/></CheckAuth>}/>
                 <Route path='/shop/:categoryId' element={<CheckAuth><ShopPageSub/></CheckAuth>}/>
                 <Route path='/shop/:categoryId/:subId' element={<CheckAuth><ShopPageServ/></CheckAuth>}/>

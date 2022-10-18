@@ -11,6 +11,7 @@ import UserDetail from './components/UserDetail/UserDetail';
 import Push from './components/Push/Push';
 import authService from '../../service/authService';
 import EmptyList from '../../components/EmptyList/EmptyList';
+import UserItem from './components/UserItem/UserItem';
 
 const mock = [1, 2, 3];
 const as = new authService();
@@ -22,7 +23,14 @@ const UsersPage = () => {
     const [push, setPush] = useState(false);
     const [list, setList] = useState([])
     const [phone, setPhone] = useState('')
+    const [phoneLoad, setPhoneLoad] = useState(false)
     const [city, setCity] = useState('')
+    const [page, setPage] = useState(1);
+    const [more, setMore] = useState(false)
+    const [moreLoad, setMoreLoad] = useState(false)
+    const [ordersCountVal, setOrdersCountVal] = useState([0, 100])
+    const [selected, setSelected] = useState([])
+
     
     const openPush = () => setPush(true)
     const closePush = () => setPush(false)
@@ -31,33 +39,103 @@ const UsersPage = () => {
 
     useEffect(() => {
         if(token) {
-            as.oredrs(token).then(res => {
-                setList(res.orders)
-                console.log(res)
-            })
+            setMoreLoad(true)
+            as.users(token, page, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
+                if(res.users) {
+                    console.log(res.users)
+                    setList(state => {
+                        return [
+                            ...state,
+                            ...res.users
+                        ]
+                    })
+                    if(res.users.length < 10) {
+                        setMore(false)
+                    } else {
+                        setMore(true)
+                    }
+                } else {
+                    setList([])
+                }
+                
+            }).finally(_ => setMoreLoad(false))
+            
         }
-    }, [token])
+    }, [token, page])
+
+    
+
+    const moreHandle = () => {
+        setPage(state => state + 1)
+    }
+
+    const phoneHandle = (e) => {
+        setPhone(e.target.value);
+    }
+
+    const phoneSubmit = () => {
+        setPage(1)
+        setPhoneLoad(true)
+        as.users(token, 1, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
+            if(res.users) {
+                setList(res.users)
+
+                if(res.users.length < 10) {
+                    setMore(false)
+                } else {
+                    setMore(true)
+                }
+            } else {
+                setList([])
+                setMore(false)
+            }
+        }).finally(_ => {
+            setPhoneLoad(false)
+        })
+    }
+
+    const handleSlider = (e) => {
+        setPage(1)
+        as.users(token, 1, phone, city, e[0], e[1]).then(res => {
+            if(res.users) {
+                setList(res.users)
+                if(res.users.length < 10) {
+                    setMore(false)
+                } else {
+                    setMore(true)
+                }
+            } else {
+                setList([])
+                setMore(false)
+            }
+            
+        })
+    }
+
+    const cancelSelect = () => {
+        setSelected([])
+    }
 
     return (
         <div className="UsersPage page">
             <Header/>
             <UserDetail visible={detail} close={closeDetail}/>
-            <Push visible={push} close={closePush}/>
+            <Push selects={selected} visible={push} close={closePush}/>
             <div className="container">
                 <div className="UsersPage__in">
                     <div className="UsersPage__body main">
                         <h2 className="UsersPage__body_head block_title">Пользователи приложения</h2>
-                        <div className="UsersPage__body_city">
+                        {/* <div className="UsersPage__body_city">
                             <Button text={'Введите город'} variant={'primary'}/>
-                        </div>
+                        </div> */}
                         <div className="UsersPage__body_search">
-                            <InputB wrapStyle={{width: 580, marginRight: 20}} placeholder={'Номер телефона'}/>
-                            <Button text={'Показать'}/>
+                            <InputB onChange={phoneHandle} wrapStyle={{width: 580, marginRight: 20}} placeholder={'Номер телефона'}/>
+                            <Button load={phoneLoad} onClick={phoneSubmit}  text={'Показать'}/>
                         </div>
                         <div className="UsersPage__body_count">
                             <div className="UsersPage__body_count_name">Количество заказов</div>
                             <div className="UsersPage__body_count_el">
-                                <Slider range defaultValue={[20, 80]}/>
+                                <Slider onAfterChange={(e) =>handleSlider(e)} onChange={(e) => setOrdersCountVal(e)} range value={[...ordersCountVal]}/>
                             </div>
                         </div>
                         <div className="UsersPage__body_list">
@@ -65,36 +143,32 @@ const UsersPage = () => {
                                 list && list.length > 0 ? (
                                     list.map((item, index) => (
                                         <div className="UsersPage__body_item" key={index}>
-                                            <OrderItem 
-                                            BundleID={item.BundleID}
-                                            CompanyID={item.CompanyID}
-                                            ComplectationID={item.ComplectationID}
-                                            ComplectationName={item.ComplectationName}
-                                            CreateTime={item.CreateTime}
-                                            DateOfBith={item.DateOfBith}
-                                            DateOfDeath={item.DateOfDeath}
-                                            DocumentNumber={item.DocumentNumber}
-                                            ID={item.ID}
-                                            Name={item.Name}
-                                            OrderID={item.OrderID}
-                                            Price={item.Price}
-                                            ServiceDescription={item.ServiceDescription}
-                                            ServiceID={item.ServiceID}
-                                            ServiceTitle={item.ServiceTitle}
-                                            ServiceType={item.ServiceType}
-                                            UserID={item.UserID}
-                                            images={item.images}
-                                            userData={item.userData}
-                                            openDetail={openDetail}/>
+                                            <UserItem
+                                                name={item.Name}
+                                                phone={item.Phone}
+                                                city={item.City}
+                                                ordersCount={item.order_count}
+                                                email={item.Email}
+                                                id={item.ID}
+                                                select={setSelected}
+                                                selected={selected.find(i => i == item.ID)}
+                                            />
                                         </div>
                                     ))
                                 ) : <EmptyList text={'Ничего не найдено'}/>
                             }
                         </div>
+                        {
+                            more ? (
+                                <div className="UsersPage__body_action">
+                                    <Button load={moreLoad} onClick={moreHandle} text={'Показать еще'} variant={'primary'}/>
+                                </div>
+                            ) : null
+                        }
                         <div className="UsersPage__body_action">
-                            <div className="UsersPage__body_action_item"><Button text={'Отменить выделение'} size={'sm'}/></div>
-                            <div className="UsersPage__body_action_item"><Button text={'Выделить все'} size={'sm'}/></div>
-                            <div className="UsersPage__body_action_item"><Button onClick={list?.length > 0 ? openPush : null} text={'Отправить Push-уведомление'} size={'sm'}/></div>
+                            <div className="UsersPage__body_action_item"><Button disabled={selected.length <= 0} onClick={cancelSelect} text={'Отменить выделение'} size={'sm'}/></div>
+                            {/* <div className="UsersPage__body_action_item"><Button text={'Выделить все'} size={'sm'}/></div> */}
+                            <div className="UsersPage__body_action_item"><Button disabled={selected.length <= 0} onClick={selected?.length > 0 ? openPush : null} text={'Отправить Push-уведомление'} size={'sm'}/></div>
                         </div>
                     </div>
                 </div>

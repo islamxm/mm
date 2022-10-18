@@ -1,6 +1,7 @@
 import './StatPage.scss';
 import Header from '../../components/Header/Header';
 import StatInd from './components/StatInd/StatInd';
+import StatBody from './components/StatBody/StatBody';
 
 const StatPage = () => {
 
@@ -13,6 +14,7 @@ const StatPage = () => {
                         <div className="StatPage__body_head block_title">Общая статистика услуг</div>
                         <div className="StatPage__body_inf">
                             <StatInd/>
+                            <StatBody/>
                         </div>
                     </div>
                 </div>

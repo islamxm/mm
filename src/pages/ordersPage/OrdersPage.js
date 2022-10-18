@@ -15,7 +15,6 @@ const as = new authService();
 const OrdersPage = () => {
     const {token} = useSelector(state => state);
     const [stat, setStat] = useState({})
-    const [list, setList] = useState([])
 
     useEffect(() => {
         const data = {
@@ -29,7 +28,7 @@ const OrdersPage = () => {
             period: moment(Date.now()).format('DD-MM-YYYY')
         }
         if(token) {
-            as.oredrs(token).then(res => {
+            as.orders(token).then(res => {
                 setStat(res.statistics)
             })
         }

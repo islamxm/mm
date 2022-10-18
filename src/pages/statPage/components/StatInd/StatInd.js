@@ -44,7 +44,7 @@ const StatInd = () => {
 
     useEffect(() => {
         if(token) {
-            as.getStat(token, period).then(res => {
+            as.getStat(token).then(res => {
                 console.log(res)
                 setChartData(res.graph_data)
                 setDgData(res.percent_orders)
@@ -80,6 +80,31 @@ const StatInd = () => {
                 return '#0D99E8'
         }
     }
+
+    const dgColor = (index) => {
+        switch (index) {
+            case 0:
+                return '#3F86F1'
+            case 1:
+                return '#102D96'
+            case 2: 
+                return '#7000FF'
+            case 3: 
+                return '#0AC069'
+            case 4:
+                return '#F16A3F'
+            case 5:
+                return '#AFAFAF'
+            case 6: 
+                return '#2FBEEB'
+            default:
+                return '#3F86F1'
+        }
+    }
+
+    useEffect(() => {
+        console.log(dgData)
+    }, [dgData])
     
     return (
         <div className="StatInd">
@@ -126,13 +151,23 @@ const StatInd = () => {
                     </Col>
                     <Col span={6}>
                         <div className="StatInd__body_dg">
-                            {/* {
-                                dgData ? (
-                                    <Doughnut data={{
-                                        labels: 
+                            {
+                                dgData && dgData.orders && dgData.orders.length > 0 ? (
+                                    <Doughnut options={{plugins: {legend: {position: 'bottom'}}}} data={{
+                                        
+                                        labels: dgData?.orders?.map(item => item.title),
+                                        datasets: [
+                                            {
+                                                label: 'test',
+                                                data: dgData?.orders?.map(item => item.percent),
+                                                backgroundColor: dgData?.orders?.map((item, index) => dgColor(index))
+
+                                            }
+                                        ]
                                     }}/>
+                                    
                                 ) : null
-                            } */}
+                            }
                         </div>
                     </Col>
                 </Row>
