@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 const as = new authService()
 
-const Push = ({visible, close, selects}) => {
+const Push = ({visible, close, selects, pushToAllUsers}) => {
     const {token} = useSelector(state => state)
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
@@ -31,19 +31,36 @@ const Push = ({visible, close, selects}) => {
 
     const onSubmit = () => {
         setLoad(true)
-        const data = {
-            user_ids: selects.join(','),
-            push_title: title,
-            push_content: text
+        
+
+        if(pushToAllUsers) {
+            const data = {
+                push_title: title,
+                push_content: text
+            }
+            as.push(token, data).then(res => {
+
+            }).finally(_ => {
+                setLoad(false)
+                closeHandle()
+    
+            })
+        } else {
+            const data = {
+                user_ids: selects.join(','),
+                push_title: title,
+                push_content: text
+            }
+            as.push(token, data).then(res => {
+
+            }).finally(_ => {
+                setLoad(false)
+                closeHandle()
+    
+            })
         }
         
-        as.push(token, data).then(res => {
-
-        }).finally(_ => {
-            setLoad(false)
-            closeHandle()
-
-        })
+        
     }
 
     return (

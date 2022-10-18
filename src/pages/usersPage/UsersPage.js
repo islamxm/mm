@@ -30,12 +30,21 @@ const UsersPage = () => {
     const [moreLoad, setMoreLoad] = useState(false)
     const [ordersCountVal, setOrdersCountVal] = useState([0, 100])
     const [selected, setSelected] = useState([])
-
+    const [pushAll, setPushAll] = useState(false)
+    const [pushToAll, setPushToAll] = useState(false)
     
     const openPush = () => setPush(true)
     const closePush = () => setPush(false)
     const openDetail = () => setDetail(true)
     const closeDetail = () => setDetail(false)
+    const openPushAll = () => {
+        setPushAll(true)
+        setPushToAll(true)
+    }
+    const closePushAll = () => {
+        setPushAll(false)
+        setPushToAll(false)
+    }
 
     useEffect(() => {
         if(token) {
@@ -115,12 +124,16 @@ const UsersPage = () => {
     const cancelSelect = () => {
         setSelected([])
     }
+    
+
+
 
     return (
         <div className="UsersPage page">
             <Header/>
             <UserDetail visible={detail} close={closeDetail}/>
             <Push selects={selected} visible={push} close={closePush}/>
+            <Push selects={selected} pushToAllUsers={pushToAll} visible={pushAll} close={closePushAll}/>
             <div className="container">
                 <div className="UsersPage__in">
                     <div className="UsersPage__body main">
@@ -167,7 +180,7 @@ const UsersPage = () => {
                         }
                         <div className="UsersPage__body_action">
                             <div className="UsersPage__body_action_item"><Button disabled={selected.length <= 0} onClick={cancelSelect} text={'Отменить выделение'} size={'sm'}/></div>
-                            {/* <div className="UsersPage__body_action_item"><Button text={'Выделить все'} size={'sm'}/></div> */}
+                            <div className="UsersPage__body_action_item"><Button onClick={openPushAll} text={'Отправить push всем'} size={'sm'}/></div>
                             <div className="UsersPage__body_action_item"><Button disabled={selected.length <= 0} onClick={selected?.length > 0 ? openPush : null} text={'Отправить Push-уведомление'} size={'sm'}/></div>
                         </div>
                     </div>
