@@ -34,7 +34,7 @@ const AuthPage = () => {
                         <Formik
                             initialValues={initForm}
                             onSubmit={(values, {setSubmitting}) => {
-                                console.log(values)
+                                setSubmitting(true)
                                 as.auth(values).then(res => {
                                     if(res.error) {
                                         setError(res.message)
@@ -44,8 +44,9 @@ const AuthPage = () => {
                                         LOCAL_STORAGE.setItem('token-memories-manager', res.data.token)
                                         nav('/orders', {replace: true})
                                     }
+                                }).finally(_ => {
+                                    setSubmitting(false)
                                 })
-                                
                             }}
                             >
                             {

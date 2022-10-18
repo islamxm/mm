@@ -45,7 +45,7 @@ const ShopPageSub = () => {
         if(token) {
             as.deleteSubcategory(token, categoryId, subId).then(res => {
                 console.log(res)
-                setList(res)
+                // setList(res)
             })
         }
     }

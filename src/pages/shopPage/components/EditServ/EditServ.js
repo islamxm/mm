@@ -52,7 +52,7 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     useEffect(() => {
         if(data) {
-            console.log(data?.images)
+            
             setName(data?.title)
             setDescr(data?.descr)
             setPrevs(data?.images?.map(item => item.URL))
@@ -136,22 +136,34 @@ const EditServ = ({visible, close, updateList, data}) => {
     const onSubmit = () => {
         setLoad(true)
         
-        const data = new FormData();    
+        const dt = new FormData();    
 
-        data.append('ServiceTitle', name)
-        data.append('ServiceDescription', descr)
-        data.append('complect', JSON.stringify(complects))
-        data.append('ID', data.id)
+        dt.append('ServiceTitle', name)
+        dt.append('ServiceDescription', descr)
+        dt.append('complect', JSON.stringify(complects))
+        dt.append('ID', data.id)
         if(images.length > 0) {
             images.forEach(item => {
-                data.append('image', item)
+                dt.append('image', item)
             })
         }
-        data.append('ServiceType', subId)
+        dt.append('ServiceType', subId)
 
-        as.editServ(token, data).then(res => {
-            updateList(res)
-            console.log(res)
+        console.log('ServiceTitle', dt.get('ServiceTitle'))
+        console.log('ServiceDescription', dt.get('ServiceDescription'))
+        console.log('complect', dt.get('complect'))
+        console.log('ID', dt.get('ID'))
+        console.log('image', dt.getAll('image'))
+        console.log('ServiceType', dt.get('ServiceType'))
+
+
+        as.editServ(token, dt).then(res => {
+            if(res.error == 1) {
+                message.error('Произоша ошибка')
+            } else {
+                updateList(res)
+            }
+            
         }).finally(_ => {
             setLoad(false)
             closeHandle()

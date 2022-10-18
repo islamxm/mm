@@ -189,7 +189,7 @@ class authService {
     }
 
     getSubcategory = async (token, categoryId) => {
-
+        console.log(endpoints.getSubcategory + `id=${categoryId}`)
         try {
             let res = await fetch(endpoints.getSubcategory + `id=${categoryId}`, {
                 method: 'GET',
@@ -227,9 +227,9 @@ class authService {
     }
 
     deleteSubcategory = async (token, categoryId, subId) => {
-        console.log(endpoints.deleteSubcategory + `СategoryID=${categoryId}`)
+        console.log(endpoints.deleteSubcategory + `id_category=${categoryId}&ID=${subId}`)
         try {
-            let res = await fetch(endpoints.deleteSubcategory + `CategoryID=${categoryId}&ID=${subId}`, {
+            let res = await fetch(endpoints.deleteSubcategory + `category=services&CategoryID=${categoryId}&ID=${subId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-type': 'application/json',
@@ -266,7 +266,7 @@ class authService {
 
 
     getServices = async (token, catId, id) => {
-        console.log(endpoints.getServices + `CategoryID=${catId}&ID=${id}`)
+        console.log(endpoints.getServices + `id_category=${id}`)
         try {
             let res = await fetch(endpoints.getServices + `id_category=${id}`, {
                 method: 'GET',
@@ -287,6 +287,7 @@ class authService {
 
 
     addServ = async (token, data, catId, subcatId) => {
+        console.log(endpoints.addServ)
         try {
             let res = await fetch(endpoints.addServ, {
                 method: 'POST',
@@ -420,7 +421,7 @@ class authService {
     }
 
     getStat = async (token, period) => {
-        console.log(endpoints.stat + `period=${period}`)
+    
         try {
             let res = await fetch(endpoints.stat + `period=${period}`, {
                 method: 'GET',
@@ -440,7 +441,7 @@ class authService {
     }
 
     getStatCat = async (token, period, category) => {
-        console.log('body', endpoints.stat + `period=${period}&category=${category}`)
+   
         try {
             let res = await fetch(endpoints.stat + `period=${period}&category=${category}`, {
                 method: 'GET',
