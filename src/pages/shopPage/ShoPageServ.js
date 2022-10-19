@@ -23,6 +23,8 @@ const ShopPageServ = () => {
     const [list, setList] = useState([]);
     const {categoryId, subId} = useParams();
     const [selected, setSelected] = useState({})
+    const [subcat, setSubcat] = useState('')
+    const [cat, setCat] = useState('')
     
     const [add, setAdd] = useState(false)
     const [edit, setEdit] = useState(false);
@@ -31,6 +33,8 @@ const ShopPageServ = () => {
     const closeAdd = () => setAdd(false)
     const openEdit = () => setEdit(true)
     const closeEdit = () => setEdit(false)
+
+    const q = new URLSearchParams(window.location.search)
 
     const editHandle = (title, descr, subcat, complect, images, id) => {
         console.log(images)
@@ -69,6 +73,10 @@ const ShopPageServ = () => {
         }
     }
 
+    useEffect(() => {
+        setSubcat(q.get('subcategory'))
+        setCat(q.get('category'))
+    }, [q])
 
 
 
@@ -81,7 +89,16 @@ const ShopPageServ = () => {
             <div className="container">
                 <div className="ShopPage__in">
                     <div className="ShopPage__body main">
+                        
                         <h2 className="ShopPage__body_head block_title">Редактирование</h2>
+                        <div className="ShopPage__body_bc">
+                            <div className="ShopPage__body_bc_item">Категории</div>
+                            {' > '}
+                            <div className="ShopPage__body_bc_item">{cat}</div> 
+                            {' > '}
+                            <div className="ShopPage__body_bc_item">{subcat}</div>
+
+                        </div>
                         <div className="ShopPage__body_list">
                             {
                                 list && list.length > 0 ? (

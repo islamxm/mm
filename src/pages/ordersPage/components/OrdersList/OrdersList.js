@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import EmptyList from '../../../../components/EmptyList/EmptyList';
 import Button from '../../../../components/Button/Button';
+import Loader from '../../../../components/Loader/Loader';
 
 
 
@@ -24,6 +25,7 @@ const OrdersList = () => {
     const [load, setLoad] = useState(false);
     const [more, setMore] = useState(false);
     const [offset, setOffset] = useState(0);
+    const [fetch, setFetch] = useState(false)
 
 
     useEffect(() => {
@@ -38,15 +40,24 @@ const OrdersList = () => {
             period: 'year'
         }
         if(token) {
-
-            as.ordersWithData(token, offset).then(res => {
-                setList(res.orders)
+            if(list.length < 10) {
+                setFetch(true)
+            }
+            as.ordersWithData(token, offset, search).then(res => {
+                setList(state => {
+                    return [
+                        ...state,
+                        ...res.orders
+                    ]
+                })
 
                 if(res.orders.length < 10) {
                     setMore(false)
                 } else {
                     setMore(true)
                 }
+            }).finally(_ => {
+                setFetch(false)
             })
         }
     }, [token, offset])
@@ -104,6 +115,10 @@ const OrdersList = () => {
         setSearch(e.target.value)
         setOffset(0)
     }
+
+    useEffect(() => {
+        console.log(offset)
+    }, [offset])
 
     const onSearch = () => {
         setLoad(true)
@@ -176,7 +191,11 @@ const OrdersList = () => {
                             </div>
                         ))
                     ) : (
-                        <EmptyList text={'Ничего не найдено'}/>
+                        fetch ? (
+                            <Loader/>
+                        ) : (
+                            <EmptyList text={'Нет заказов'}/>
+                        )
                     )
                     
                 }

@@ -89,10 +89,10 @@ class authService {
         }
     }
 
-    ordersWithData = async (token, list_begin ) => {
+    ordersWithData = async (token, list_begin, phone ) => {
         
         try {
-            let res = await fetch(endpoints.orders + `?list_begin=${list_begin}&period=year`, {
+            let res = await fetch(endpoints.orders + `?list_begin=${list_begin}&period=year&phone=${phone}`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {

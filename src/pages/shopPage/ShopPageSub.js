@@ -11,6 +11,8 @@ import EditCategory from './components/AddCategory/EditCategory';
 import { useParams } from 'react-router-dom';
 
 
+const url = new URLSearchParams()
+
 
 const as = new authService();
 
@@ -19,10 +21,12 @@ const ShopPageSub = () => {
     const {token} = useSelector(state => state);
     const [list, setList] = useState([]);
     const {categoryId} = useParams();
-
+    const [cat, setCat] = useState('')
     const [add, setAdd] = useState(false);
     const [edit, setEdit] = useState(false);
     const [editId, setEditId] = useState(null);
+
+    const q = new URLSearchParams(window.location.search)
 
     const openAdd = () => setAdd(true)
     const closeAdd = () => setAdd(false)
@@ -44,7 +48,6 @@ const ShopPageSub = () => {
     const deleteSubcategory = (subId) => {
         if(token) {
             as.deleteSubcategory(token, categoryId, subId).then(res => {
-                console.log(res)
                 setList(res)
             })
         }
@@ -55,6 +58,10 @@ const ShopPageSub = () => {
         openEdit();
     }
 
+    useEffect(() => {
+        setCat(q.get('category'))
+    }, [q])
+    
 
     return (
         <div className="ShopPage page">
@@ -63,8 +70,16 @@ const ShopPageSub = () => {
             <EditCategory categoryId={categoryId} sub={true} currentList={list} updateList={setList} visible={edit} id={editId} close={closeEdit}/>
             <div className="container">
                 <div className="ShopPage__in">
+                    
                     <div className="ShopPage__body main">
+                        
                         <h2 className="ShopPage__body_head block_title">Редактирование</h2>
+                        <div className="ShopPage__body_bc">
+                            <div className="ShopPage__body_bc_item">Категории</div>
+                            {' > '}
+                            <div className="ShopPage__body_bc_item">{cat}</div>
+                            
+                        </div>
                         <div className="ShopPage__body_list">
                             {
                                 list && list.length > 0 ? (
@@ -76,7 +91,7 @@ const ShopPageSub = () => {
                                                 pic={item.PicURL}
                                                 del={deleteSubcategory}
                                                 edit={selectEditId}
-                                                link={`/shop/${categoryId}/${item.ID}`}
+                                                link={`/shop/${categoryId}/${item.ID}/?category=${cat}&subcategory=${item.Name}`}
                                                 />
                                         </div>
                                     ))

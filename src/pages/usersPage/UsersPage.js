@@ -12,6 +12,7 @@ import Push from './components/Push/Push';
 import authService from '../../service/authService';
 import EmptyList from '../../components/EmptyList/EmptyList';
 import UserItem from './components/UserItem/UserItem';
+import Loader from '../../components/Loader/Loader';
 
 const mock = [1, 2, 3];
 const as = new authService();
@@ -33,6 +34,7 @@ const UsersPage = () => {
     const [selected, setSelected] = useState([])
     const [pushAll, setPushAll] = useState(false)
     const [pushToAll, setPushToAll] = useState(false)
+    const [fetch, setFetch] = useState(false)
     
     const openPush = () => setPush(true)
     const closePush = () => setPush(false)
@@ -50,6 +52,7 @@ const UsersPage = () => {
     useEffect(() => {
         if(token) {
             setMoreLoad(true)
+            setFetch(true)
             as.users(token, page, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
                 if(res.users) {
                     console.log(res.users)
@@ -68,7 +71,10 @@ const UsersPage = () => {
                     setList([])
                 }
                 
-            }).finally(_ => setMoreLoad(false))
+            }).finally(_ => {
+                setMoreLoad(false)
+                setFetch(false)
+            })
             
         }
     }, [token, page])
@@ -90,6 +96,7 @@ const UsersPage = () => {
     const citySubmit = () => {
         setPage(1)
         setCityLoad(true)
+        setFetch(true)
         as.users(token, 1, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
             if(res.users) {
                 setList(res.users)
@@ -105,6 +112,7 @@ const UsersPage = () => {
             }
         }).finally(_ => {
             setCityLoad(false)
+            setFetch(false)
         })
     }
 
@@ -112,6 +120,7 @@ const UsersPage = () => {
     const phoneSubmit = () => {
         setPage(1)
         setPhoneLoad(true)
+        setFetch(true)
         as.users(token, 1, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
             if(res.users) {
                 setList(res.users)
@@ -127,11 +136,13 @@ const UsersPage = () => {
             }
         }).finally(_ => {
             setPhoneLoad(false)
+            setFetch(false)
         })
     }
 
     const handleSlider = (e) => {
         setPage(1)
+        setFetch(true)
         as.users(token, 1, phone, city, e[0], e[1]).then(res => {
             if(res.users) {
                 setList(res.users)
@@ -145,6 +156,8 @@ const UsersPage = () => {
                 setMore(false)
             }
             
+        }).finally(_ => {
+            setFetch(false)
         })
     }
 
@@ -206,8 +219,15 @@ const UsersPage = () => {
                                             />
                                         </div>
                                     ))
-                                ) : <EmptyList text={'Ничего не найдено'}/>
+                                ) : (
+                                    fetch ? ( 
+                                        <Loader/>
+                                    ) : (
+                                        <EmptyList text={'Ничего не найдено'}/>
+                                    )
+                                )
                             }
+                            
                         </div>
                         {
                             more ? (

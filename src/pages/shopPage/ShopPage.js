@@ -64,7 +64,11 @@ const ShopPage = () => {
             <div className="container">
                 <div className="ShopPage__in">
                     <div className="ShopPage__body main">
+                        
                         <h2 className="ShopPage__body_head block_title">Редактирование</h2>
+                        <div className="ShopPage__body_bc">
+                            <div className="ShopPage__body_bc_item">Категории</div>
+                        </div>
                         <div className="ShopPage__body_list">
                             {
                                 list && list.length > 0 ? (
@@ -76,7 +80,7 @@ const ShopPage = () => {
                                                 pic={item.PicURL}
                                                 del={deleteCategory}
                                                 edit={selectEditId}
-                                                link={`/shop/${item.ID}`}
+                                                link={`/shop/${item.ID}?category=${item.Name}`}
                                                 />
                                         </div>
                                     ))
