@@ -6,7 +6,7 @@ import Button from '../../../../components/Button/Button';
 import {BsFileEarmarkText} from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import authService from '../../../../service/authService';
-
+import {IoMdClose} from 'react-icons/io';
 
 const as = new authService()
 const EditDoc = ({visible, close,  updateList, title, id, user_id, link}) => {
@@ -38,7 +38,7 @@ const EditDoc = ({visible, close,  updateList, title, id, user_id, link}) => {
 
     const closeHandle = () => {
         setName('')
-        setFile(null)
+        
         close();
     }
 
@@ -68,6 +68,11 @@ const EditDoc = ({visible, close,  updateList, title, id, user_id, link}) => {
                     <div className="AddDoc__body_upload">
                         <input onChange={fileHandle} id={'docAdd'} type="file" accept='.pdf'/>
                         <label htmlFor="docAdd" className="AddDoc__body_upload_el">
+                            {
+                                file ? (
+                                    <button className="AddDoc__body_upload_el_del" onClick={() => setFile(null)}><IoMdClose/></button>
+                                ) : null
+                            }
                             <BsFileEarmarkText/>
                         </label>
                         {
