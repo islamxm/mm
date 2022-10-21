@@ -1,19 +1,33 @@
 import './DocItem.scss';
 import { BsTrash } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import authService from '../../../../service/authService';
+import AddDoc from '../AddDoc/AddDoc';
 
-const DocItem = ({name, del}) => {
+const as = new authService();
 
-    const deleteHandle = () => {
-        del()
+const DocItem = ({id, link, title, user_id, updateList, edit}) => {
+    const {token} = useSelector(state => state)
+    
+
+    
+    const deleteDoc = () => {
+        console.log('ddd')
+        console.log(token)
+        as.delFiles(token, user_id, id).then(res => {
+            console.log(res)
+        })
     }
+    
 
     return (
         <div className="DocItem">
-            <button className="DocItem__delete" onClick={deleteHandle}>
+            
+            <button className="DocItem__delete" onClick={deleteDoc}>
                 <BsTrash/>
             </button>
-            <div className="DocItem__name">
-                {name}
+            <div className="DocItem__name" onClick={() => edit(user_id, id, title, link)}>
+                {title}
             </div>
         </div>
     )

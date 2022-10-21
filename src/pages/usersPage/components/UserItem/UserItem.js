@@ -1,11 +1,17 @@
 import './UserItem.scss';
 import {Col, Row} from 'antd';
 import { useNavigate } from 'react-router-dom';
+import useDoubleClick from 'use-double-click';
+import { useRef } from 'react';
+import authService from '../../../../service/authService';
+import { useSelector } from 'react-redux';
 
+const as = new authService()
 
-const UserItem = ({name, id, email, phone, city, passport, ordersCount, selected, select}) => {
+const UserItem = ({name, id, email, phone, city, passport, ordersCount, selected, select, openDetail}) => {
+    const {token} = useSelector(state => state);
     const nav = useNavigate();
-
+    const btnRef = useRef();
 
     const handleSelect = () => {
         if(selected) {
@@ -26,12 +32,33 @@ const UserItem = ({name, id, email, phone, city, passport, ordersCount, selected
         }
     }
 
+    const handleDetail = () => {
+        as.getFiles(token, id).then(res => {
+            console.log(res.files)
+            openDetail(
+                id,
+                res.files,
+                city,
+                phone,
+                email,
+                name
+            )
+        })
+    }
+
+    useDoubleClick({
+        onSingleClick: handleSelect,
+        onDoubleClick: handleDetail,
+        ref: btnRef,
+        latency: 250
+    })
+
 
     return (
         <div className={"UserItem" + (selected ? ' active ' : '')}>
             <Row gutter={[10, 10]}>
                 <Col span={20}>
-                    <div className="UserItem__main" onClick={handleSelect}>
+                    <div className="UserItem__main" ref={btnRef}>
                         <div className="UserItem__main_body">
                         <div className="UserItem__main_name">{name}</div>
                         <div className="UserItem__main_phone">{phone}</div>

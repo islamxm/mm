@@ -7,22 +7,31 @@ import {BsFileEarmarkText} from 'react-icons/bs';
 import { useSelector } from 'react-redux';
 import authService from '../../../../service/authService';
 
-const as = new authService();
 
-const AddDoc = ({visible, close, userId, updateList}) => {
+const as = new authService()
+const EditDoc = ({visible, close,  updateList, title, id, user_id, link}) => {
     const {token} = useSelector(state => state)
     const [name, setName] = useState('')
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState('')
     const [load, setLoad] = useState(false)
 
+
     useEffect(() => {
-        console.log(file)
-    }, [file])
+        if(title) {
+            setName(title)
+        }
+    }, [title])
+
+    useEffect(() => {
+        if(link) {
+            setFile(link)
+        }
+    }, [link])
+
 
     const nameHandle = (e) => {
         setName(e.target.value)
     }
-
     const fileHandle = (e) => {
         setFile(e.target.files[0])
     }
@@ -36,23 +45,21 @@ const AddDoc = ({visible, close, userId, updateList}) => {
     const onSubmit = () => {
         setLoad(true)
         const data = new FormData()
-
-        data.append('file', file)
-        data.append('titles', JSON.stringify([{title: name}]))
-        as.addFiles(token, userId, data).then(res => {
-            console.log(res)
+        data.append('titles', JSON.stringify([{title: name, ID: id}]))
+        data.append('file', link)
+        as.editFiles(token, user_id, data).then(res => {
             updateList(res.files)
+            closeHandle()
         }).finally(_ => {
             setLoad(false)
-            closeHandle()
         })
     }
 
-    
+   
 
     return (
         <Modal className='modal AddDoc' open={visible} onCancel={closeHandle} width={1030}>
-            <h2 className="AddDoc__head block_title">Добавление документа</h2>
+            <h2 className="AddDoc__head block_title">Редактирование документа</h2>
             <div className="AddDoc__body">
                 <div className="AddDoc__body_row">
                     <InputB onChange={nameHandle} value={name} placeholder={'Название'} wrapStyle={{width: 580}}/>
@@ -63,22 +70,22 @@ const AddDoc = ({visible, close, userId, updateList}) => {
                         <label htmlFor="docAdd" className="AddDoc__body_upload_el">
                             <BsFileEarmarkText/>
                         </label>
-                        
                         {
-                            file && file.name ? (
+                            file ? (
                                 <div className="AddDoc__body_upload_file">
                                     {file.name}
                                 </div>
                             ) : null
                         }
+                        
                     </div>
                 </div>
                 <div className="AddDoc__body_row">
-                    <Button load={load} onClick={onSubmit} disabled={!file || !name} text={'Сохранить'} variant={'primary'}/>
+                    <Button onClick={onSubmit} load={load} disabled={!file || !name} text={'Сохранить'} variant={'primary'}/>
                 </div>
             </div>
         </Modal>
     )
 }
 
-export default AddDoc;
+export default EditDoc;

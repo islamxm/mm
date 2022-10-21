@@ -576,6 +576,81 @@ class authService {
             console.log(err)
         }
     }
+
+    getFiles = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.users + `?action=files&ID=${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    addFiles = async (token, id, body) => {
+        try {
+            let res = await fetch(endpoints.users + `?action=files&ID=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: body
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    editFiles = async (token, id, body) => {
+        try {
+            let res = await fetch(endpoints.users + `?action=files&ID=${id}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+                body: body
+            })
+
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
+    delFiles = async (token, id, delId) => {
+        console.log(endpoints.users + `?action=files&ID=${id}&IDs=${delId}`)
+        try {
+            let res = await fetch(endpoints.users + `?action=files&ID=${id}&IDs=${delId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
 }
 
 export default authService;

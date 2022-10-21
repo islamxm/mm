@@ -2,7 +2,7 @@ import './UsersPage.scss';
 import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import InputB from '../../components/InputB/InputB';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Slider } from 'antd';
 import OrderItem from '../ordersPage/components/OrderItem/OrderItem';
@@ -14,12 +14,14 @@ import EmptyList from '../../components/EmptyList/EmptyList';
 import UserItem from './components/UserItem/UserItem';
 import Loader from '../../components/Loader/Loader';
 
+ 
+
 const mock = [1, 2, 3];
 const as = new authService();
 
 const UsersPage = () => {
     const {token} = useSelector(state => state)
-
+    const dbRef = useRef();
     const [detail, setDetail] = useState(false)
     const [push, setPush] = useState(false);
     const [list, setList] = useState([])
@@ -35,10 +37,24 @@ const UsersPage = () => {
     const [pushAll, setPushAll] = useState(false)
     const [pushToAll, setPushToAll] = useState(false)
     const [fetch, setFetch] = useState(false)
+    const [detailProps, setDetailProps] = useState({})
     
     const openPush = () => setPush(true)
     const closePush = () => setPush(false)
-    const openDetail = () => setDetail(true)
+    const openDetail = (id, docs, city, phone, email, name) => {
+        setDetailProps({
+            id,
+            docs,
+            city,
+            phone,
+            email,
+            name
+            // history
+        })
+        console.log(docs)
+        setDetail(true)
+        
+    }
     const closeDetail = () => setDetail(false)
     const openPushAll = () => {
         setPushAll(true)
@@ -166,12 +182,17 @@ const UsersPage = () => {
     }
     
 
+    
+
 
 
     return (
         <div className="UsersPage page">
             <Header/>
-            <UserDetail visible={detail} close={closeDetail}/>
+            <UserDetail
+                {...detailProps}
+                visible={detail} 
+                close={closeDetail}/>
             <Push selects={selected} visible={push} close={closePush}/>
             <Push selects={selected} pushToAllUsers={pushToAll} visible={pushAll} close={closePushAll}/>
             <div className="container">
@@ -215,7 +236,8 @@ const UsersPage = () => {
                                                 email={item.Email}
                                                 id={item.ID}
                                                 select={setSelected}
-                                                selected={selected.find(i => i == item.ID)}
+                                                openDetail={openDetail}
+                                                selected={selected.find(i => i == item.ID)} 
                                             />
                                         </div>
                                     ))

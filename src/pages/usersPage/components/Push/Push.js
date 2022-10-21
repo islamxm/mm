@@ -4,17 +4,19 @@ import TextB from '../../../../components/TextB/TextB';
 import InputB from '../../../../components/InputB/InputB';
 import Button from '../../../../components/Button/Button';
 import {Col, Row} from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import authService from '../../../../service/authService';
 import { useSelector } from 'react-redux';
 
+
 const as = new authService()
 
-const Push = ({visible, close, selects, pushToAllUsers}) => {
+const Push = ({visible, close, selects, pushToAllUsers, oneUser}) => {
     const {token} = useSelector(state => state)
     const [title, setTitle] = useState('')
     const [text, setText] = useState('')
     const [load, setLoad] = useState('')
+
 
     const titleHandle = (e) => {
         setTitle(e.target.value)
@@ -45,7 +47,21 @@ const Push = ({visible, close, selects, pushToAllUsers}) => {
                 closeHandle()
     
             })
-        } else {
+        } 
+        if (oneUser) {
+            const data = {
+                user_ids: oneUser,
+                push_title: title,
+                push_content: text
+            }
+            as.push(token, data).then().then(res => {
+
+            }).finally(_ => {
+                setLoad(false)
+                closeHandle()
+            })
+        }
+        if(!pushToAllUsers && ! oneUser) {
             const data = {
                 user_ids: selects.join(','),
                 push_title: title,
