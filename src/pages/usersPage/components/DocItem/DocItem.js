@@ -16,6 +16,7 @@ const DocItem = ({id, link, title, user_id, updateList, edit}) => {
         console.log(token)
         as.delFiles(token, user_id, id).then(res => {
             console.log(res)
+            updateList(res.users)
         })
     }
     

@@ -643,6 +643,7 @@ class authService {
                     'Authorization': `Bearer ${token}`
                 },
                 mode: 'cors',
+                body: JSON.stringify({IDs: delId})
             })
             const response = await checkAuth(res)
             return response
