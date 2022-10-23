@@ -325,6 +325,7 @@ class authService {
     }
 
     editServ = async (token, data) => {
+        console.log(endpoints.editServ)
         try {
             let res = await fetch(endpoints.editServ, {
                 method: 'POST',

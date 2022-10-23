@@ -15,7 +15,7 @@ import AddCm from "../AddCm/AddCm";
 import { useSelector } from "react-redux";
 import authService from "../../../../service/authService";
 import { useParams } from "react-router-dom";
-
+import {IoMdClose} from 'react-icons/io';
 
 const as = new authService()
 
@@ -100,6 +100,17 @@ const AddServ = ({visible, close, updateList}) => {
         })
     }
 
+    const delImage = (index) => {
+        console.log(index)
+        const modi = images
+        const pri = modi.splice(index, 1);
+        setImages([...modi])
+
+        const modp = prevs
+        const prp = modp.splice(index, 1)
+        setPrevs([...modp])
+    }
+
 
     const closeHandle = () => {
         setName('')
@@ -123,6 +134,7 @@ const AddServ = ({visible, close, updateList}) => {
                         {
                             prevs && prevs.length > 0 ? (
                                 <div className="AddServ__body_ff">
+                                    <button onClick={() => delImage(0)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                     <div className="AddServ__body_ff_image">
                                         <img src={prevs[0]} alt="" />
                                     </div>
@@ -157,6 +169,7 @@ const AddServ = ({visible, close, updateList}) => {
                                     return (
                                         <Col span={8} key={index}>
                                             <div className="AddServ__body_prev">
+                                                <button onClick={() => delImage(index)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                                 <img src={item} alt="" />
                                             </div>
                                         </Col>

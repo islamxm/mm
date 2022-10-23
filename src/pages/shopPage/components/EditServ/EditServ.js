@@ -15,7 +15,7 @@ import AddCm from "../AddCm/AddCm";
 import { useSelector } from "react-redux";
 import authService from "../../../../service/authService";
 import { useParams } from "react-router-dom";
-
+import {IoMdClose} from 'react-icons/io';
 
 const as = new authService()
 
@@ -52,7 +52,7 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     useEffect(() => {
         if(data) {
-            
+            console.log(data?.images)
             setName(data?.title)
             setDescr(data?.descr)
             setPrevs(data?.images?.map(item => item.URL))
@@ -80,6 +80,8 @@ const EditServ = ({visible, close, updateList, data}) => {
                     })
                 })
             })
+
+            console.log(data?.images)
             // setImages(data?.images?.map(async item => createFile(item.URL).then(res => res)))
         }
     }, [data])
@@ -101,7 +103,7 @@ const EditServ = ({visible, close, updateList, data}) => {
         if(newArr.length > 3) {
             message.error('Нельзя загрузить больше 3 картинок')
         } else {
-            setImages(newArr)
+            setImages([...newArr])
             let prevArr = newArr.map(item => {
                 if(typeof(item) == 'object') {
                     return URL.createObjectURL(item)
@@ -109,7 +111,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                     return item
                 }
             })
-            setPrevs(prevArr)
+            setPrevs([...prevArr])
         }
     }
 
@@ -158,6 +160,7 @@ const EditServ = ({visible, close, updateList, data}) => {
 
 
         as.editServ(token, dt).then(res => {
+            console.log(res)
             if(res.error == 1) {
                 message.error('Произоша ошибка')
             } else {
@@ -194,10 +197,22 @@ const EditServ = ({visible, close, updateList, data}) => {
         close()
     }
 
-    useEffect(() => {
-        console.log(complects)
-    }, [complects])
 
+    const delImage = (index) => {
+        console.log(index)
+        const modi = images
+        const pri = modi.splice(index, 1);
+        setImages([...modi])
+
+        const modp = prevs
+        const prp = modp.splice(index, 1)
+        setPrevs([...modp])
+    }
+
+    useEffect(() => {
+        console.log(images)
+        console.log(prevs)
+    }, [images, prevs])
 
     return (
         <Modal width={830} open={visible} onCancel={closeHandle} className="modal AddServ">
@@ -210,6 +225,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                         {
                             prevs && prevs.length > 0 ? (
                                 <div className="AddServ__body_ff">
+                                    <button onClick={() => delImage(0)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                     <div className="AddServ__body_ff_image">
                                         <img src={prevs[0]} alt="" />
                                     </div>
@@ -244,6 +260,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                     return (
                                         <Col span={8} key={index}>
                                             <div className="AddServ__body_prev">
+                                            <button onClick={() => delImage(index)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                                 <img src={item} alt="" />
                                             </div>
                                         </Col>
@@ -256,7 +273,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                     }
 
                     {
-                        prevs && prevs.length == 3 ? (
+                        prevs && prevs.length >= 3 ? (
                             null
                         ) : (
                             <Col span={8}>

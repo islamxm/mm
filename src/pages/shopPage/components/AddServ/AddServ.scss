@@ -19,16 +19,34 @@
 
         &_ff {
             height: 100%;
-            border-radius: 20px;
-            background-color: var(--gray_border);
-            overflow: hidden;
-            height: 198px;
             
+            background-color: var(--gray_border);
+            border-radius: 20px;
+            height: 198px;
+            position: relative;
+            
+            &_del {
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
+                line-height: 15px;
+                background-color: red;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                border-radius: 100%;
+                position: absolute;
+                top: -10px;
+                right: -10px;
+            }
+
             &_image {
                 width: 100%;
                 height: 100%;
-                // overflow: hidden;
-                
+                overflow: hidden;
+                border-radius: 20px;
+
                 img {
                     object-fit: cover;
                     display: flex;
@@ -69,9 +87,9 @@
         }
 
         &_prev {
-
+            position: relative;
             border-radius: 15px;
-            overflow: hidden;
+            // overflow: hidden;
 
             width: 100%;
             height: 170px;
@@ -81,6 +99,8 @@
                 height: 100%;
                 object-fit: cover;
                 display: flex;
+                border-radius: 20px;
+                overflow: hidden;
             }
         }
 
