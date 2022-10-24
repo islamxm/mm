@@ -48,6 +48,7 @@ const AddServ = ({visible, close, updateList}) => {
 
     const onFileChange = (e) => {
         const newArr = [...images, ...e.target.files];
+        console.log(newArr)
         if(newArr.length > 10) {
             message.error('Нельзя загрузить больше 10 картинок')
         } else {
