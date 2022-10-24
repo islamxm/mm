@@ -37,7 +37,6 @@ const ShopPageServ = () => {
     const q = new URLSearchParams(window.location.search)
 
     const editHandle = (title, descr, subcat, complect, images, id) => {
-        console.log(images)
         const data = {
             title,
             descr,
@@ -46,21 +45,16 @@ const ShopPageServ = () => {
             images,
             id
         }
-
         setSelected(data)
-
         openEdit();
     }
 
     useEffect(() => {
         if(token && categoryId && subId) {
-            console.log('categoery Id', categoryId)
-            console.log('sub id', subId)
             as.getServices(token, categoryId, subId).then(res => {
                 console.log(res)
                 setList(res)
             })
-
         }
     }, [token, categoryId, subId])
 

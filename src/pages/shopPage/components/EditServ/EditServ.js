@@ -187,7 +187,6 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     const closeHandle = () => {
         setName('')
-        // setPrice('')
         setAdress('')
         setDescr('')
         setImages([])
@@ -213,7 +212,6 @@ const EditServ = ({visible, close, updateList, data}) => {
         } else {
             console.log('dynamic')
             as.delServImg(token, id).then(res => {
-
                 const mod = prevs;
                 const pr = mod.splice(0, res.length + 1, ...res)
                 console.log(mod)
@@ -223,6 +221,11 @@ const EditServ = ({visible, close, updateList, data}) => {
         
     }
 
+
+    useEffect(() => {
+        console.log('prevs', prevs)
+        console.log('images', images)
+    }, [prevs, images])
 
 
     return (
@@ -243,8 +246,8 @@ const EditServ = ({visible, close, updateList, data}) => {
                                 </div>
                             ) : (
                                 <div className="AddServ__body_ff">
-                                    <input multiple onChange={onFileChange} type="file" id="firstUpload"/>
-                                    <label htmlFor="firstUpload" className="AddServ__body_ff_body">
+                                    <input multiple onChange={onFileChange} type="file" id="firstUploadEdit"/>
+                                    <label htmlFor="firstUploadEdit" className="AddServ__body_ff_body">
                                         <div className="AddServ__body_ff_body_icon">
                                             <BsImages/>
                                         </div>
@@ -289,8 +292,8 @@ const EditServ = ({visible, close, updateList, data}) => {
                         ) : (
                             <Col span={8}>
                                 <div className="AddServ__body_add">
-                                    <input multiple onChange={onFileChange} id="defUpload" type="file" />
-                                    <label htmlFor="defUpload" className="AddServ__body_add_body">
+                                    <input multiple onChange={onFileChange} id="defUploadEdit" type="file" />
+                                    <label htmlFor="defUploadEdit" className="AddServ__body_add_body">
                                         <BsPlusLg/>
                                     </label>
                                 </div>

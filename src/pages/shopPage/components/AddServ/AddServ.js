@@ -42,7 +42,6 @@ const AddServ = ({visible, close, updateList}) => {
 
 
     const handleName = (e) => setName(e.target.value);
-    // const handlePrice = (e) => setPrice(e.target.value);
     const handleDescr = (e) => setDescr(e.target.value);
     
 
@@ -142,8 +141,8 @@ const AddServ = ({visible, close, updateList}) => {
                                 </div>
                             ) : (
                                 <div className="AddServ__body_ff">
-                                    <input multiple onChange={onFileChange} type="file" id="firstUpload"/>
-                                    <label htmlFor="firstUpload" className="AddServ__body_ff_body">
+                                    <input multiple onChange={onFileChange} type="file" id="firstUploadAdd"/>
+                                    <label htmlFor="firstUploadAdd" className="AddServ__body_ff_body">
                                         <div className="AddServ__body_ff_body_icon">
                                             <BsImages/>
                                         </div>
@@ -188,8 +187,8 @@ const AddServ = ({visible, close, updateList}) => {
                         ) : (
                             <Col span={8}>
                                 <div className="AddServ__body_add">
-                                    <input multiple onChange={onFileChange} id="defUpload" type="file" />
-                                    <label htmlFor="defUpload" className="AddServ__body_add_body">
+                                    <input multiple onChange={onFileChange} id="defUploadAdd" type="file" />
+                                    <label htmlFor="defUploadAdd" className="AddServ__body_add_body">
                                         <BsPlusLg/>
                                     </label>
                                 </div>
