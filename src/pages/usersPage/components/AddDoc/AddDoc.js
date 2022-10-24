@@ -41,7 +41,7 @@ const AddDoc = ({visible, close, userId, updateList}) => {
         data.append('file', file)
         data.append('titles', JSON.stringify([{title: name}]))
         as.addFiles(token, userId, data).then(res => {
-            console.log(res)
+          
             updateList(res.files)
         }).finally(_ => {
             setLoad(false)

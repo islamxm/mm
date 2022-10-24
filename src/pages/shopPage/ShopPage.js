@@ -35,7 +35,7 @@ const ShopPage = () => {
     useEffect(() => {
         if(token) {
             as.getCategories(token).then(res => {
-                console.log(res)
+               
                 setList(res)
             })
         }
@@ -44,7 +44,7 @@ const ShopPage = () => {
     const deleteCategory = (categoryId) => {
         if(token) {
             as.deleteCategory(token, categoryId).then(res => {
-                console.log(res)
+               
                 setList(res)
             })
         }

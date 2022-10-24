@@ -51,7 +51,6 @@ class authService {
     }
 
     ordersPhone = async (token, phone, list_begin) => {
-        console.log(endpoints.orders + `?phone=${phone}&list_begin=${list_begin}period='year'`)
 
         try {
             let res = await fetch(endpoints.orders + `?phone=${phone}&list_begin=${list_begin}period='year'`, {
@@ -208,7 +207,7 @@ class authService {
     }
 
     getSubcategory = async (token, categoryId) => {
-        console.log(endpoints.getSubcategory + `id=${categoryId}`)
+    
         try {
             let res = await fetch(endpoints.getSubcategory + `id=${categoryId}`, {
                 method: 'GET',
@@ -246,7 +245,7 @@ class authService {
     }
 
     deleteSubcategory = async (token, categoryId, subId) => {
-        console.log(endpoints.deleteSubcategory + `id_category=${categoryId}&ID=${subId}`)
+ 
         try {
             let res = await fetch(endpoints.deleteSubcategory + `category=services&CategoryID=${categoryId}&ID=${subId}`, {
                 method: 'DELETE',
@@ -285,7 +284,7 @@ class authService {
 
 
     getServices = async (token, catId, id) => {
-        console.log(endpoints.getServices + `id_category=${id}`)
+
         try {
             let res = await fetch(endpoints.getServices + `id_category=${id}`, {
                 method: 'GET',
@@ -306,7 +305,7 @@ class authService {
 
 
     addServ = async (token, data, catId, subcatId) => {
-        console.log(endpoints.addServ)
+ 
         try {
             let res = await fetch(endpoints.addServ, {
                 method: 'POST',
@@ -325,7 +324,7 @@ class authService {
     }
 
     editServ = async (token, data) => {
-        console.log(endpoints.editServ)
+  
         try {
             let res = await fetch(endpoints.editServ, {
                 method: 'POST',
@@ -381,7 +380,7 @@ class authService {
     }
 
     editFaq = async (token, id, data) => {
-        console.log(endpoints.editFaq + `id=${id}`)
+
         try {
             let res = await fetch(endpoints.editFaq + `id=${id}`, {
                 method: 'POST',
@@ -558,8 +557,27 @@ class authService {
         }
     }
 
+    userOrders = async (token, id) => {
+  
+        try {
+            let res = await fetch(endpoints.users + `?action=orders&ID=${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
+
     users = async (token, page, phone, city, ordersStart, ordersEnd) => {
-        console.log(endpoints.users + `?list_limit=10&page=${page}&phone=${phone}&city=${city}&orders_count=${ordersStart};${ordersEnd}`)
+      
         try {
             let res = await fetch(endpoints.users + `?list_limit=10&page=${page}&phone=${phone}&city=${city}&orders_count=${ordersStart};${ordersEnd}`, {
                 method: 'GET',
@@ -634,7 +652,7 @@ class authService {
     }
 
     delFiles = async (token, id, delId) => {
-        console.log(endpoints.users + `?action=files&ID=${id}&IDs=${delId}`)
+   
         try {
             let res = await fetch(endpoints.users + `?action=files&ID=${id}&IDs=${delId}`, {
                 method: 'DELETE',
@@ -654,7 +672,7 @@ class authService {
     }
 
     delServImg = async (token, id) => {
-        console.log(endpoints.servs + `?action=image&ID=${id}`)
+     
         try {
             let res = await fetch(endpoints.servs + `?element=image&ID=${id}`, {
                 method: 'DELETE',

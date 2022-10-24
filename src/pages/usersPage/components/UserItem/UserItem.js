@@ -34,10 +34,9 @@ const UserItem = ({name, id, email, phone, city, passport, ordersCount, selected
 
     const handleDetail = () => {
         as.getFiles(token, id).then(res => {
-            console.log(res.files)
             openDetail(
                 id,
-                res.files,
+                res?.files,
                 city,
                 phone,
                 email,

@@ -16,7 +16,7 @@ const OrdersInd = ({data}) => {
     useEffect(() => {
         if(token) {
             as.orders(token).then(res => {
-                console.log(res)
+            
                 setTotal(res.statistics.total_count)
                 setNewO(res.statistics.total_count_new)
                 setOld(res.statistics.total_count_old)

@@ -43,7 +43,7 @@ const EditCategory = ({categoryId, sub, currentList, updateList, visible, close,
             data.append('name', name)
             data.append('image', image)
             as.editSubcategory(token, data).then(res => {
-                console.log(res)
+       
                 let mod = currentList;
                 let rm = mod.splice(mod.findIndex(item => item.ID == id), 1, res)
                 updateList(mod)
@@ -57,7 +57,7 @@ const EditCategory = ({categoryId, sub, currentList, updateList, visible, close,
             data.append('name', name);
             data.append('image', image);
             as.editCategory(token, data).then(res => {
-                console.log(res)
+          
                 let mod = currentList;
                 let rm = mod.splice(mod.findIndex(item => item.ID == id), 1, res)
                 updateList(mod);

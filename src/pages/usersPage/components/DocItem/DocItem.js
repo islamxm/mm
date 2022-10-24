@@ -12,10 +12,9 @@ const DocItem = ({id, link, title, user_id, updateList, edit}) => {
 
     
     const deleteDoc = () => {
-        console.log('ddd')
-        console.log(token)
+        
         as.delFiles(token, user_id, id).then(res => {
-            console.log(res)
+           
             updateList(res.files)
         })
     }

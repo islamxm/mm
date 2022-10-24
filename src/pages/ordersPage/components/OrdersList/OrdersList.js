@@ -116,15 +116,11 @@ const OrdersList = () => {
         setOffset(0)
     }
 
-    useEffect(() => {
-        console.log(offset)
-    }, [offset])
 
     const onSearch = () => {
         setLoad(true)
         as.ordersPhone(token, search, offset).then(res => {
             setList(res.orders)
-            console.log(res)
         }).finally(_ => {
             setLoad(false)
         })

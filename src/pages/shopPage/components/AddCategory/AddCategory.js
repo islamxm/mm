@@ -31,7 +31,6 @@ const AddCategory = ({updateList, visible, close, id}) => {
         setName(e.target.value)
     } 
     const imageHandle = (e) => {
-        console.log(e.target.files)
         setImage(e.target.files[0])
     }
     
@@ -39,14 +38,14 @@ const AddCategory = ({updateList, visible, close, id}) => {
         setLoad(true)
 
         if(id) {
-            console.log(id)
+    
             const data = new FormData();
             data.append('name', name);
             data.append('image', image)
             data.append('CategoryID', id)
 
             as.addSubcategory(token, data).then(res => {
-                console.log(res)
+             
                 updateList(res)
             }).finally(_ => {
                 setLoad(false)
@@ -60,7 +59,7 @@ const AddCategory = ({updateList, visible, close, id}) => {
             
             
             as.addCategory(token, data).then(res => {
-                console.log(res)
+                
                 updateList(res)
             }).finally(_ => {
                 setLoad(false)

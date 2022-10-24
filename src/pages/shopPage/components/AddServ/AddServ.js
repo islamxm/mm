@@ -47,7 +47,6 @@ const AddServ = ({visible, close, updateList}) => {
 
     const onFileChange = (e) => {
         const newArr = [...images, ...e.target.files];
-        console.log(newArr)
         if(newArr.length > 10) {
             message.error('Нельзя загрузить больше 10 картинок')
         } else {
@@ -72,9 +71,7 @@ const AddServ = ({visible, close, updateList}) => {
         setComplects([...mod])
     }
 
-    useEffect(() => {
-        console.log(subId)
-    }, [subId])
+
 
 
     const onSubmit = () => {
@@ -92,7 +89,7 @@ const AddServ = ({visible, close, updateList}) => {
         data.append('ServiceType', subId)
 
         as.addServ(token, data, categoryId, subId).then(res => {
-            console.log(res)
+            
             updateList(res)
         }).finally(_ => {
             setLoad(false)
@@ -101,7 +98,7 @@ const AddServ = ({visible, close, updateList}) => {
     }
 
     const delImage = (index) => {
-        console.log(index)
+        
         const modi = images
         const pri = modi.splice(index, 1);
         setImages([...modi])

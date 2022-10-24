@@ -10,6 +10,10 @@ import { useState, useEffect } from 'react';
 import Push from '../Push/Push';
 import EditDoc from '../AddDoc/EditDoc';
 import { useNavigate } from 'react-router-dom';
+import authService from '../../../../service/authService';
+import { useSelector } from 'react-redux';
+
+const as = new authService()
 
 
 const mock = [1,2,3];
@@ -24,6 +28,7 @@ const UserDetail = ({
     email,
     name
 }) => {
+    const {token} = useSelector(state => state)
     const nav = useNavigate();
     const [addDoc, setAddDoc] = useState(false);
     const [editDoc, setEditDoc] = useState(false)
@@ -32,6 +37,16 @@ const UserDetail = ({
     const [pushId, setPushId] = useState(null)
     const [addDocUserId, setAddDocUserId] = useState('')
     const [editDocUserData, setDocUserEditData] = useState({})
+    const [hist, setHist] = useState([])
+
+    useEffect(() => {
+        if(token && id) {
+           as.userOrders(token, id).then(res => {
+      
+                setHist(res?.orders)
+           })
+        }
+    }, [token, id])
 
 
     const openAddDoc = (user_id) => {
@@ -153,11 +168,15 @@ const UserDetail = ({
                                 <div className="UserDetail__body_content_orders_list">
                                     <Row gutter={[20, 20]}>
                                         {
-                                            mock && mock.length > 0 ? (
-                                                mock.map((item, index) => (
+                                            hist && hist.length > 0 ? (
+                                                hist.map((item, index) => (
                                                     <Col span={12} key={index}>
                                                         <div className="UserDetail__body_content_orders_item">
-                                                            <OrderCard name={'asdasd'} date={'adas'} price={'adsa'}/>
+                                                            <OrderCard 
+                                                                name={item.OrderID} 
+                                                                date={item.CreateTime} 
+                                                                price={item.Price}
+                                                                id={item.ID}/>
                                                         </div>
                                                     </Col>
                                                 ))

@@ -39,7 +39,7 @@ const ShopPageSub = () => {
     useEffect(() => {
         if(token && categoryId) {
             as.getSubcategory(token, categoryId).then(res => {
-                console.log(res)
+               
                 setList(res)
             })
         }

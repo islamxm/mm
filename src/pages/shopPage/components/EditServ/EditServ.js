@@ -52,7 +52,7 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     useEffect(() => {
         if(data) {
-            console.log(data?.images)
+          
             setName(data?.title)
             setDescr(data?.descr)
             setPrevs(data?.images)
@@ -70,18 +70,6 @@ const EditServ = ({visible, close, updateList, data}) => {
                 }
                 
             }))
-            // data?.images?.forEach(async item => {
-            //     createFile(item.URL).then(res => {
-            //         setImages(state => {
-            //             return [
-            //                 ...state,
-            //                 res
-            //             ]
-            //         })
-            //     })
-            // })
-            console.log(data?.images)
-            // setImages(data?.images?.map(async item => createFile(item.URL).then(res => res)))
         }
     }, [data])
 
@@ -99,8 +87,6 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     const onFileChange = (e) => {
         const prArr = [...prevs, ...e.target.files];
-        console.log(prArr)
-        console.log(prevs.length)
         const imgArr = [...images, ...e.target.files];
         if(imgArr.length + images.length > 10) {
             message.error('Нельзя загрузить больше 10 картинок')
@@ -150,16 +136,10 @@ const EditServ = ({visible, close, updateList, data}) => {
         }
         dt.append('ServiceType', subId)
 
-        console.log('ServiceTitle', dt.get('ServiceTitle'))
-        console.log('ServiceDescription', dt.get('ServiceDescription'))
-        console.log('complect', dt.get('complect'))
-        console.log('ID', dt.get('ID'))
-        console.log('image', dt.getAll('image'))
-        console.log('ServiceType', dt.get('ServiceType'))
 
 
         as.editServ(token, dt).then(res => {
-            console.log(res)
+          
             if(res.error == 1) {
                 message.error('Произоша ошибка')
             } else {
@@ -174,9 +154,9 @@ const EditServ = ({visible, close, updateList, data}) => {
 
     const onDelete = () => {
         setDload(true)
-        console.log('delete')
+       
         as.deleteServ(token, data.id).then(res => {
-            console.log(res)
+          
             updateList(res)
         }).finally(_ => {
             setDload(false)
@@ -200,7 +180,7 @@ const EditServ = ({visible, close, updateList, data}) => {
         
      
         if(index >= (prevs.length - 1) - (images.length - 1)) {
-            console.log('local')
+         
             const modi = images
             const pri = modi.splice(index - images.length, 1);
             setImages([...modi])
@@ -210,22 +190,17 @@ const EditServ = ({visible, close, updateList, data}) => {
             setPrevs([...modp])
 
         } else {
-            console.log('dynamic')
+      
             as.delServImg(token, id).then(res => {
                 const mod = prevs;
                 const pr = mod.splice(0, res.length + 1, ...res)
-                console.log(mod)
+           
                 setPrevs([...mod])
             }) 
         }
         
     }
 
-
-    useEffect(() => {
-        console.log('prevs', prevs)
-        console.log('images', images)
-    }, [prevs, images])
 
 
     return (

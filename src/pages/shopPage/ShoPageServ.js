@@ -52,7 +52,7 @@ const ShopPageServ = () => {
     useEffect(() => {
         if(token && categoryId && subId) {
             as.getServices(token, categoryId, subId).then(res => {
-                console.log(res)
+              
                 setList(res)
             })
         }
@@ -61,7 +61,7 @@ const ShopPageServ = () => {
     const deleteSubcategory = (subId) => {
         if(token) {
             as.deleteSubcategory(token, categoryId, subId).then(res => {
-                console.log(res)
+             
                 setList(res)
             })
         }

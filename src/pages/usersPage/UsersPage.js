@@ -51,7 +51,6 @@ const UsersPage = () => {
             name
             // history
         })
-        console.log(docs)
         setDetail(true)
         
     }
@@ -71,7 +70,7 @@ const UsersPage = () => {
             setFetch(true)
             as.users(token, page, phone, city, ordersCountVal[0], ordersCountVal[1]).then(res => {
                 if(res.users) {
-                    console.log(res.users)
+                   
                     setList(state => {
                         return [
                             ...state,

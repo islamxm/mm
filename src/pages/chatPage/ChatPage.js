@@ -24,7 +24,6 @@ const ChatPage = () => {
     useEffect(() => {
         if(token && userId) {
             as.getChat(token).then(res => {
-                console.log(res)
                 const cr = res.find(item => item.ID == userId);
                
                 const obj = {
@@ -60,7 +59,7 @@ const ChatPage = () => {
                 Message: message
             }
             as.sendMessage(token, userId, data).then(res => {
-                console.log(res);
+                
                 setChatList(state => {
                     return [
                         ...state,
@@ -80,7 +79,7 @@ const ChatPage = () => {
             }
 
             as.push(token, push).then(res => {
-                console.log(res)
+                
             })
         }
         

@@ -43,10 +43,10 @@ const StatInd = () => {
 
     
     useEffect(() => {
-        // console.log(period)
+        
         if(token && period) {
             as.getStat(token, period).then(res => {
-                console.log(res)
+               
                 setChartData(res.graph_data)
                 setDgData(res.percent_orders)
                 setStatData(res.categoryes_stat)
@@ -62,10 +62,6 @@ const StatInd = () => {
         responsive: true,
         plugins: {
           legend: false
-        //   title: {
-        //     display: true,
-        //     text: 'Chart.js Line Chart',
-        //   },
         },
       };
 
@@ -103,9 +99,6 @@ const StatInd = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(dgData)
-    }, [dgData])
     
     return (
         <div className="StatInd">

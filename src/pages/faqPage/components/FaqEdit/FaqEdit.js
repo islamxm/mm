@@ -45,7 +45,7 @@ const FaqEdit = ({updateList, visible, close, id, title, answer}) => {
             question: "",
         }
 
-        console.log(data)
+
         if(token) {
             as.editFaq(token, id, data).then(res => {
                 updateList(res)
@@ -60,7 +60,7 @@ const FaqEdit = ({updateList, visible, close, id, title, answer}) => {
     const deleteFaq = () => {
         setDload(true)
         as.deleteFaq(token, id).then(res => {
-            console.log(res)
+
             updateList(res)
             
         }).finally(_ => {
