@@ -55,7 +55,7 @@ const EditServ = ({visible, close, updateList, data}) => {
             console.log(data?.images)
             setName(data?.title)
             setDescr(data?.descr)
-            setPrevs(data?.images?.map(item => item.URL))
+            setPrevs(data?.images)
             setComplects(data?.complect?.map((item) => {
                 if(item.ServiceID && item.ID) {
                     return {
@@ -70,17 +70,16 @@ const EditServ = ({visible, close, updateList, data}) => {
                 }
                 
             }))
-            data?.images?.forEach(async item => {
-                createFile(item.URL).then(res => {
-                    setImages(state => {
-                        return [
-                            ...state,
-                            res
-                        ]
-                    })
-                })
-            })
-
+            // data?.images?.forEach(async item => {
+            //     createFile(item.URL).then(res => {
+            //         setImages(state => {
+            //             return [
+            //                 ...state,
+            //                 res
+            //             ]
+            //         })
+            //     })
+            // })
             console.log(data?.images)
             // setImages(data?.images?.map(async item => createFile(item.URL).then(res => res)))
         }
@@ -227,7 +226,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                 <div className="AddServ__body_ff">
                                     <button onClick={() => delImage(0)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                     <div className="AddServ__body_ff_image">
-                                        <img src={prevs[0]} alt="" />
+                                        <img src={prevs[0]?.URL} alt="" />
                                     </div>
                                 </div>
                             ) : (
@@ -261,7 +260,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                         <Col span={8} key={index}>
                                             <div className="AddServ__body_prev">
                                             <button onClick={() => delImage(index)} className="AddServ__body_ff_del"><IoMdClose/></button>
-                                                <img src={item} alt="" />
+                                                <img src={item.URL} alt="" />
                                             </div>
                                         </Col>
                                     )

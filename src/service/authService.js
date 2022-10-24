@@ -652,6 +652,24 @@ class authService {
             console.log(err)
         }
     }
+
+    delServImg = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.serv + `?action=image&ID=${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'cors',
+            })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
     
 }
 

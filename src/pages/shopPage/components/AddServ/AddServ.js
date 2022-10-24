@@ -85,8 +85,8 @@ const AddServ = ({visible, close, updateList}) => {
         data.append('ServiceDescription', descr)
         data.append('complect', JSON.stringify(complects))
         if(images.length > 0) {
-            images.forEach(item => {
-                data.append('image', item)
+            images.forEach((item, index) => {
+                data.append(`image${index}`, item)
             })
         }
         data.append('ServiceType', subId)
