@@ -654,12 +654,13 @@ class authService {
     }
 
     delServImg = async (token, id) => {
+        console.log(endpoints.servs + `?action=image&ID=${id}`)
         try {
-            let res = await fetch(endpoints.serv + `?action=image&ID=${id}`, {
+            let res = await fetch(endpoints.servs + `?element=image&ID=${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
+                    // 'Content-type': 'application/json',
+                    // 'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 mode: 'cors',

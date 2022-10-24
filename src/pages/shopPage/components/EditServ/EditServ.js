@@ -98,14 +98,19 @@ const EditServ = ({visible, close, updateList, data}) => {
     
 
     const onFileChange = (e) => {
-        const newArr = [...images, ...e.target.files];
-        if(newArr.length > 3) {
-            message.error('Нельзя загрузить больше 3 картинок')
+        const prArr = [...prevs, ...e.target.files];
+        console.log(prArr)
+        console.log(prevs.length)
+        const imgArr = [...images, ...e.target.files];
+        if(imgArr.length + images.length > 10) {
+            message.error('Нельзя загрузить больше 10 картинок')
         } else {
-            setImages([...newArr])
-            let prevArr = newArr.map(item => {
-                if(typeof(item) == 'object') {
-                    return URL.createObjectURL(item)
+            setImages([...imgArr])
+            let prevArr = prArr.map((item, index) => {
+                if(typeof(item) == 'object' && index > prevs.length - 1) {
+                    return {
+                        URL: URL.createObjectURL(item)
+                    }
                 } else {
                     return item
                 }
@@ -123,16 +128,11 @@ const EditServ = ({visible, close, updateList, data}) => {
         })
     }
 
-    
-
     const onDeleteComplect = (index) => {
         const mod = complects;
         const rm = mod.splice(index, 1);
         setComplects([...mod])
     }
-
-
-
 
     const onSubmit = () => {
         setLoad(true)
@@ -144,8 +144,8 @@ const EditServ = ({visible, close, updateList, data}) => {
         dt.append('complect', JSON.stringify(complects))
         dt.append('ID', data.id)
         if(images.length > 0) {
-            images.forEach(item => {
-                dt.append('image', item)
+            images.forEach((item, index) => {
+                dt.append(`image${index}`, item)
             })
         }
         dt.append('ServiceType', subId)
@@ -197,21 +197,33 @@ const EditServ = ({visible, close, updateList, data}) => {
     }
 
 
-    const delImage = (index) => {
-        console.log(index)
-        const modi = images
-        const pri = modi.splice(index, 1);
-        setImages([...modi])
+    const delImage = (id, index) => {
+        
+     
+        if(index >= (prevs.length - 1) - (images.length - 1)) {
+            console.log('local')
+            const modi = images
+            const pri = modi.splice(index - images.length, 1);
+            setImages([...modi])
 
-        const modp = prevs
-        const prp = modp.splice(index, 1)
-        setPrevs([...modp])
+            const modp = prevs
+            const prp = modp.splice(index, 1)
+            setPrevs([...modp])
+
+        } else {
+            console.log('dynamic')
+            as.delServImg(token, id).then(res => {
+
+                const mod = prevs;
+                const pr = mod.splice(0, res.length + 1, ...res)
+                console.log(mod)
+                setPrevs([...mod])
+            }) 
+        }
+        
     }
 
-    useEffect(() => {
-        console.log(images)
-        console.log(prevs)
-    }, [images, prevs])
+
 
     return (
         <Modal width={830} open={visible} onCancel={closeHandle} className="modal AddServ">
@@ -224,7 +236,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                         {
                             prevs && prevs.length > 0 ? (
                                 <div className="AddServ__body_ff">
-                                    <button onClick={() => delImage(0)} className="AddServ__body_ff_del"><IoMdClose/></button>
+                                    <button onClick={() => delImage(prevs[0]?.ID, 0)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                     <div className="AddServ__body_ff_image">
                                         <img src={prevs[0]?.URL} alt="" />
                                     </div>
@@ -259,7 +271,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                     return (
                                         <Col span={8} key={index}>
                                             <div className="AddServ__body_prev">
-                                            <button onClick={() => delImage(index)} className="AddServ__body_ff_del"><IoMdClose/></button>
+                                            <button onClick={() => delImage(item.ID, index)} className="AddServ__body_ff_del"><IoMdClose/></button>
                                                 <img src={item.URL} alt="" />
                                             </div>
                                         </Col>
@@ -272,7 +284,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                     }
 
                     {
-                        prevs && prevs.length >= 3 ? (
+                        prevs && prevs.length >= 10 ? (
                             null
                         ) : (
                             <Col span={8}>
@@ -305,7 +317,7 @@ const EditServ = ({visible, close, updateList, data}) => {
                                 text={'Сохранить'} 
                                 variant={'primary'}
                                 size={'sm'}
-                                disabled={images?.length <= 0 || !name || !descr || complects?.length <= 0}
+                                disabled={prevs?.length <= 0 || !name || !descr || complects?.length <= 0}
                                 onClick={onSubmit}
                                 load={load}
                                 />

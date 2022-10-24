@@ -48,8 +48,8 @@ const AddServ = ({visible, close, updateList}) => {
 
     const onFileChange = (e) => {
         const newArr = [...images, ...e.target.files];
-        if(newArr.length > 3) {
-            message.error('Нельзя загрузить больше 3 картинок')
+        if(newArr.length > 10) {
+            message.error('Нельзя загрузить больше 10 картинок')
         } else {
             setImages(newArr)
             let prevArr = newArr.map(item => URL.createObjectURL(item))
@@ -182,7 +182,7 @@ const AddServ = ({visible, close, updateList}) => {
                     }
 
                     {
-                        prevs && prevs.length == 3 ? (
+                        prevs && prevs.length >= 10 ? (
                             null
                         ) : (
                             <Col span={8}>
