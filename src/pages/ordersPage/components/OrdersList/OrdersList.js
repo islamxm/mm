@@ -10,6 +10,8 @@ import moment from 'moment';
 import EmptyList from '../../../../components/EmptyList/EmptyList';
 import Button from '../../../../components/Button/Button';
 import Loader from '../../../../components/Loader/Loader';
+import DateSelect from '../DateSelect/DateSelect';
+import { Row,Col } from 'antd';
 
 
 
@@ -19,6 +21,7 @@ const mock = [1, 2, 3, 4];
 const OrdersList = () => {
     const [selected, setSelected] = useState({})
     const {visible, hideModal, showModal} = useModal()
+    const [dateVis, setDateVis] = useState(false)
     const [search, setSearch] = useState('')
     const {token} = useSelector(state => state);
     const [list, setList] = useState([]);
@@ -26,24 +29,36 @@ const OrdersList = () => {
     const [more, setMore] = useState(false);
     const [offset, setOffset] = useState(0);
     const [fetch, setFetch] = useState(false)
+    const [period, setPeriod] = useState('')
 
 
     useEffect(() => {
-        const data = {
-            list_begin: 0,
-            list_limit: 10,
-            page: 1,
-            sortby: 'CreateTime|DESC',
-            this_day: 0,
-            id: '',
-            phone: search,
-            period: 'year'
-        }
         if(token) {
             if(list.length < 10) {
                 setFetch(true)
             }
-            as.ordersWithData(token, offset, search).then(res => {
+
+            // if(!search) {
+            //     as.orders(token).then(res => {
+            //         console.log(res)
+            //         setList(state => {
+            //             return [
+            //                 ...state,
+            //                 res.orders
+            //             ]
+            //         })
+
+            //         if(res.orders.length < 10) {
+            //             setMore(false)
+            //         } else {
+            //             setMore(true)
+            //         }
+            //     }).finally(_ => {
+            //         setFetch(false)
+            //     })
+            // } 
+            as.ordersWithData(token, offset, search, period).then(res => {
+                console.log(res)
                 setList(state => {
                     return [
                         ...state,
@@ -65,7 +80,6 @@ const OrdersList = () => {
     const moreHandle = () => {
         setOffset(state => state + 10)
     }
-
 
     const selectedHandle = (BundleID,
         CompanyID,
@@ -116,11 +130,49 @@ const OrdersList = () => {
         setOffset(0)
     }
 
-
     const onSearch = () => {
         setLoad(true)
         as.ordersPhone(token, search, offset).then(res => {
             setList(res.orders)
+            if(res.orders.length < 10) {
+                setMore(false)
+            } else {
+                setMore(true)
+            }
+        }).finally(_ => {
+            setLoad(false)
+        })
+    }
+
+    const periodHandle = (date) => {
+        setPeriod(date)
+        setLoad(true)
+        setOffset(0)
+        as.ordersWithData(token, search, 0, date).then(res => {
+            console.log(res)
+            setList(res.orders)
+            if(res.orders.length < 10) {
+                setMore(false)
+            } else {
+                setMore(true)
+            }
+        }).finally(_ => {
+            setLoad(false)
+        })
+    }
+
+    const thisDayOrders = () => {
+        setPeriod(moment(Date.now()).format('YYYY-MM-DD'))
+        setLoad(true)
+        setOffset(0)
+        as.ordersWithData(token, search, 0, moment(Date.now()).format('YYYY-MM-DD')).then(res => {
+            setList(res.orders)
+
+            if(res.orders.length < 10) {
+                setMore(false)
+            } else {
+                setMore(true)
+            }
         }).finally(_ => {
             setLoad(false)
         })
@@ -128,8 +180,16 @@ const OrdersList = () => {
 
 
 
+    const dateModalClose = () => {
+        setDateVis(false)
+    }
+    const dateModalOpen = () => {
+        setDateVis(true)
+    }
+    
     return (
         <div className="OrdersList">
+            <DateSelect visible={dateVis} close={dateModalClose} select={periodHandle}/>
             <OrderDetail 
                 BundleID={selected?.BundleID}
                 CompanyID={selected?.CompanyID}
@@ -158,11 +218,21 @@ const OrdersList = () => {
                 <InputB onChange={searchHandle} wrapStyle={{width: 580}} placeholder={'Номер телефона'}/>
                 <Button onClick={onSearch} load={load} disabled={!search} text={'Поиск'} style={{marginLeft: 20}}/>
             </div>
+            <div className="OrdersList__action" style={{margin: '20px 0 40px'}}>
+                <Row gutter={[20, 0]} justify={'center'}>
+                    <Col span={8}>
+                        <Button onClick={dateModalOpen} style={{width: '100%'}} text={period ? period : 'Выбор даты'} variant={'primary'}/>
+                    </Col>
+                    <Col span={8}>
+                        <Button onClick={thisDayOrders} style={{width: '100%'}} text={'Заказы за сегодня'} variant={'primary'}/>
+                    </Col>
+                </Row>
+            </div>
             <div className="OrdersList__body">
                 {   
                     list && list.length > 0 ? (
                         list.map((item, index) => (
-                            <div className="OrdersList__body_item">
+                            <div className="OrdersList__body_item" key={index}>
                                 <OrderItem 
                                     BundleID={item.BundleID}
                                     CompanyID={item.CompanyID}
