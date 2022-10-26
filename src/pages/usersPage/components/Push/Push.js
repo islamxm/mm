@@ -37,8 +37,9 @@ const Push = ({visible, close, selects, pushToAllUsers, oneUser}) => {
 
         if(pushToAllUsers) {
             const data = {
+                user_ids: 'all',
                 push_title: title,
-                push_content: text
+                push_content: text,
             }
             as.push(token, data).then(res => {
 

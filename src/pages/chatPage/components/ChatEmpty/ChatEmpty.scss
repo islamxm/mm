@@ -1,0 +1,20 @@
+.ChatEmpty {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &__icon {
+        font-size: 50px;
+        line-height: 50px;
+        margin-bottom: 20px;
+        color: var(--blue);
+    }
+
+    &__label {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30px;
+    }
+}

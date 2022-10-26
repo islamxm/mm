@@ -539,6 +539,7 @@ class authService {
     }
 
     push = async (token, data) => {
+        console.log(endpoints.push)
         try {
             let res = await fetch(endpoints.push, {
                 method: 'POST',

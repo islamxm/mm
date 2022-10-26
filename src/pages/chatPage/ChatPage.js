@@ -9,6 +9,7 @@ import ChatMes from './components/ChatMes/ChatMes';
 import InputB from '../../components/InputB/InputB';
 import {AiOutlineArrowUp} from 'react-icons/ai';
 import { message as antMes } from 'antd';
+import ChatEmpty from './components/ChatEmpty/ChatEmpty';
 
 const as = new authService();
 
@@ -20,9 +21,11 @@ const ChatPage = () => {
     const [chatList, setChatList] = useState([])
     const [message, setMessage] = useState('')
     const [load, setLoad] = useState(false)
+    const [chatEmpty, setChatEmpty] = useState(false)
 
     useEffect(() => {
         if(token && userId) {
+            setChatEmpty(false)
             as.getChat(token).then(res => {
                 const cr = res.find(item => item.ID == userId);
                
@@ -38,8 +41,10 @@ const ChatPage = () => {
             })
         }
         if(token && !userId) {
+            setChatEmpty(true)
             as.getChat(token).then(res => {
                 setUsers(res)
+                
             })
         }
     }, [token, userId])
@@ -74,9 +79,10 @@ const ChatPage = () => {
             const push = {
                 user_ids: userId,
                 push_content: message,
-                // code_message: 1,
                 push_title: 'Служба поддержки'
             }
+
+            console.log(push)
 
             as.push(token, push).then(res => {
                 
@@ -112,32 +118,41 @@ const ChatPage = () => {
                                 }
                             </div>
                             <div className="ChatPage__body_chat_area">
-                                <div className="ChatPage__body_chat_area_head">
-                                    <div className="ChatPage__body_chat_area_head_name">{current?.name}</div>
-                                    <div className="ChatPage__body_chat_area_head_phone">{current?.phone}</div>
-                                </div>
-                                <div className="ChatPage__body_chat_area_list">
-                                    {
-                                        chatList && chatList.length > 0 ? (
-                                            chatList.map((item, index) => (
-                                                <div className="ChatPage__body_chat_area_item" key={index}>
-                                                    <ChatMes
-                                                        name={item.OperatorName}
-                                                        message={item.Message}
-                                                        time={item.Time}
-                                                        isMine={item.isMine}
-                                                        />
-                                                </div>
-                                            )) 
-                                        ) : null
-                                    }
-                                </div>
-                                <div className="ChatPage__body_chat_area_text">
-                                    <InputB onChange={messageHandle} value={message} placeholder={'Текст сообщения...'}/>
-                                    <button onClick={onMessageSubmit} disabled={load} className={"ChatPage__body_chat_area_text_btn"}>
-                                        <AiOutlineArrowUp/>
-                                    </button>
-                                </div>
+                                {
+                                    chatEmpty ? (
+                                        <ChatEmpty/>
+                                    ) : (
+                                        <>
+                                        <div className="ChatPage__body_chat_area_head">
+                                            <div className="ChatPage__body_chat_area_head_name">{current?.name}</div>
+                                            <div className="ChatPage__body_chat_area_head_phone">{current?.phone}</div>
+                                        </div>
+                                        <div className="ChatPage__body_chat_area_list">
+                                            {
+                                                chatList && chatList.length > 0 ? (
+                                                    chatList.map((item, index) => (
+                                                        <div className="ChatPage__body_chat_area_item" key={index}>
+                                                            <ChatMes
+                                                                name={item.OperatorName}
+                                                                message={item.Message}
+                                                                time={item.Time}
+                                                                isMine={item.isMine}
+                                                                />
+                                                        </div>
+                                                    )) 
+                                                ) : null
+                                            }
+                                        </div>
+                                        <div className="ChatPage__body_chat_area_text">
+                                            <InputB onChange={messageHandle} value={message} placeholder={'Текст сообщения...'}/>
+                                            <button onClick={onMessageSubmit} disabled={load} className={"ChatPage__body_chat_area_text_btn"}>
+                                                <AiOutlineArrowUp/>
+                                            </button>
+                                        </div>
+                                        </>
+                                    )
+                                }
+                                
                             </div>
                         </div>
                     </div>

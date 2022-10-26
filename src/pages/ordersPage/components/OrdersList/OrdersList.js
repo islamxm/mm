@@ -161,22 +161,7 @@ const OrdersList = () => {
         })
     }
 
-    const thisDayOrders = () => {
-        setPeriod(moment(Date.now()).format('YYYY-MM-DD'))
-        setLoad(true)
-        setOffset(0)
-        as.ordersWithData(token, search, 0, moment(Date.now()).format('YYYY-MM-DD')).then(res => {
-            setList(res.orders)
-
-            if(res.orders.length < 10) {
-                setMore(false)
-            } else {
-                setMore(true)
-            }
-        }).finally(_ => {
-            setLoad(false)
-        })
-    }
+ 
 
 
 
@@ -223,9 +208,7 @@ const OrdersList = () => {
                     <Col span={8}>
                         <Button onClick={dateModalOpen} style={{width: '100%'}} text={period ? period : 'Выбор даты'} variant={'primary'}/>
                     </Col>
-                    <Col span={8}>
-                        <Button onClick={thisDayOrders} style={{width: '100%'}} text={'Заказы за сегодня'} variant={'primary'}/>
-                    </Col>
+                   
                 </Row>
             </div>
             <div className="OrdersList__body">
