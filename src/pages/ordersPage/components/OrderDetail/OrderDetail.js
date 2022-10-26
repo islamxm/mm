@@ -4,7 +4,10 @@ import {GrClose} from 'react-icons/gr';
 import {Col, Row} from 'antd';
 import OrderDetailItem from '../OrderDetailItem/OrderDetailItem';
 import Button from '../../../../components/Button/Button';
+import authService from '../../../../service/authService';
+import { useSelector } from 'react-redux';
 
+const as = new authService()
 
 const OrderDetail = ({
     visible, 
@@ -30,9 +33,16 @@ const OrderDetail = ({
     images,
     userData
 }) => {
-    
+    const {token} = useSelector(state => state)
+
     const closeHandle = () => {
         close()
+    }
+
+    const completeOrder = () => {
+        as.changeStatus(token, OrderID).then(res => {
+            console.log(res)
+        })
     }
 
     return (
@@ -132,7 +142,7 @@ const OrderDetail = ({
                 <div className="OrderDetail__body_action">
                     {
                         newOrder ? (
-                            <Button style={{paddingLeft: 100, paddingRight: 100}}  variant={'success'} text={'Принять'}/>
+                            <Button style={{paddingLeft: 100, paddingRight: 100}}  variant={'success'} text={'Завершить'}/>
                         ) : (
                             <Button style={{paddingLeft: 100, paddingRight: 100}} variant={'primary'} text={'Чат'}/>
                         )

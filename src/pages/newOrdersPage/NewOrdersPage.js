@@ -64,8 +64,9 @@ const NewOrdersPage = () => {
     }
     useEffect(() => {
         if(token) {
-            as.oredrs(token).then(res => {
-                setList(res.orders)
+            as.orders(token).then(res => {
+                console.log(res.orders)
+                setList(res?.orders?.filter(item => item.Status == '0'))
             })
         }
     }, [token])
@@ -74,7 +75,7 @@ const NewOrdersPage = () => {
     return (
         <div className="NewOrdersPage page">
             <Header/>
-            <BackNav title={'Новые заказы'}/>
+            <BackNav title={'Не завершенные заказы'}/>
             <OrderDetail 
                 BundleID={selected?.BundleID}
                 CompanyID={selected?.CompanyID}

@@ -11,6 +11,7 @@ import EmptyList from '../../../../components/EmptyList/EmptyList';
 import Button from '../../../../components/Button/Button';
 import Loader from '../../../../components/Loader/Loader';
 import DateSelect from '../DateSelect/DateSelect';
+import { useNavigate } from 'react-router-dom';
 import { Row,Col } from 'antd';
 
 
@@ -19,6 +20,7 @@ const as = new authService();
 const mock = [1, 2, 3, 4];
 
 const OrdersList = () => {
+    const nav = useNavigate()
     const [selected, setSelected] = useState({})
     const {visible, hideModal, showModal} = useModal()
     const [dateVis, setDateVis] = useState(false)
@@ -37,33 +39,12 @@ const OrdersList = () => {
             if(list.length < 10) {
                 setFetch(true)
             }
-
-            // if(!search) {
-            //     as.orders(token).then(res => {
-            //         console.log(res)
-            //         setList(state => {
-            //             return [
-            //                 ...state,
-            //                 res.orders
-            //             ]
-            //         })
-
-            //         if(res.orders.length < 10) {
-            //             setMore(false)
-            //         } else {
-            //             setMore(true)
-            //         }
-            //     }).finally(_ => {
-            //         setFetch(false)
-            //     })
-            // } 
             as.ordersWithData(token, offset, search, period).then(res => {
-                console.log(res)
                 setList(state => {
                     return [
                         ...state,
                         ...res.orders
-                    ]
+                    ].filter(item => item.Status == '1')
                 })
 
                 if(res.orders.length < 10) {
@@ -133,7 +114,7 @@ const OrdersList = () => {
     const onSearch = () => {
         setLoad(true)
         as.ordersPhone(token, search, offset).then(res => {
-            setList(res.orders)
+            setList(res?.orders?.filter(item => item.Status == '1'))
             if(res.orders.length < 10) {
                 setMore(false)
             } else {
@@ -150,7 +131,7 @@ const OrdersList = () => {
         setOffset(0)
         as.ordersWithData(token, search, 0, date).then(res => {
             console.log(res)
-            setList(res.orders)
+            setList(res?.orders?.filter(item => item.Status == '1'))
             if(res.orders.length < 10) {
                 setMore(false)
             } else {
@@ -170,6 +151,10 @@ const OrdersList = () => {
     }
     const dateModalOpen = () => {
         setDateVis(true)
+    }
+
+    const toNewOrders = () => {
+        nav('/orders/new')
     }
     
     return (
@@ -208,7 +193,9 @@ const OrdersList = () => {
                     <Col span={8}>
                         <Button onClick={dateModalOpen} style={{width: '100%'}} text={period ? period : 'Выбор даты'} variant={'primary'}/>
                     </Col>
-                   
+                    <Col span={8}>
+                        <Button onClick={toNewOrders} style={{width: '100%'}} text={period ? period : 'Не завершенные'} variant={'success'}/>
+                    </Col>
                 </Row>
             </div>
             <div className="OrdersList__body">

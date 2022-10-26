@@ -24,6 +24,7 @@ const endpoints = {
     chatCreate: `${BASE_DOMAIN}/chat.php?`,
     push: `${BASE_DOMAIN}/push.php`,
     users: `${BASE_DOMAIN}/users.php`,
+    сhangeStatus: `${BASE_DOMAIN}/ChangeOrderStatus.php`
     
 }
 

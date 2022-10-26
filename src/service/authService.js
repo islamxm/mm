@@ -690,6 +690,25 @@ class authService {
             console.log(err)
         }
     }
+
+    changeStatus = async (token, id) => {
+        try {
+            let res = await fetch(endpoints.сhangeStatus, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                mode: 'no-cors',
+                body: JSON.stringify({serviceId: id})
+            })
+            const response = await checkAuth(res)
+            return response
+        } catch(err) {
+            console.log(err)
+        }
+    }
     
 }
 
