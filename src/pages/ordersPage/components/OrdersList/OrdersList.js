@@ -32,16 +32,16 @@ const OrdersList = () => {
     const [offset, setOffset] = useState(0);
     const [fetch, setFetch] = useState(false)
     const [period, setPeriod] = useState('')
-    const [nf, setNf] = useState(999);
+    const [nf, setNf] = useState(0);
 
 
-    // useEffect(() => {
-    //     if(token) {
-    //         as.orders(token).then(res => {
-    //             setNf(res?.orders?.filter(item => item.Status == '0').length)
-    //         })
-    //     }
-    // }, [token])
+    useEffect(() => {
+        if(token) {
+            as.orders(token).then(res => {
+                setNf(res?.orders?.filter(item => item.Status == '0').length)
+            })
+        }
+    }, [token])
 
 
     useEffect(() => {
