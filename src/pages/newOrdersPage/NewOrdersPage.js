@@ -69,7 +69,15 @@ const NewOrdersPage = () => {
                 setList(res?.orders?.filter(item => item.Status == '0'))
             })
         }
+        console.log(token)
     }, [token])
+
+    const updateList = () => {
+        as.orders(token).then(res => {
+            console.log(res.orders)
+            setList(res?.orders?.filter(item => item.Status == '0'))
+        })
+    }
 
 
     return (
@@ -98,7 +106,8 @@ const NewOrdersPage = () => {
                 userData={selected?.userData}
                 newOrder={true} 
                 visible={visible} 
-                close={hideModal}/>
+                close={hideModal}
+                updateList={updateList}/>
             <div className="container">
                 <div className="NewOrdersPage__in">
                     <div className="NewOrdersPage__body main">

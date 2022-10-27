@@ -31,7 +31,8 @@ const OrderDetail = ({
     ServiceType,
     UserID,
     images,
-    userData
+    userData,
+    updateList
 }) => {
     const {token} = useSelector(state => state)
 
@@ -40,9 +41,16 @@ const OrderDetail = ({
     }
 
     const completeOrder = () => {
-        as.changeStatus(token, OrderID).then(res => {
+        const data = new FormData();
+
+        data.append('status', 1)
+        console.log(data.get('status'))
+        as.changeStatus(token, OrderID, data).then(res => {
             console.log(res)
+            updateList()
         })
+
+        closeHandle()
     }
 
     return (
@@ -142,7 +150,7 @@ const OrderDetail = ({
                 <div className="OrderDetail__body_action">
                     {
                         newOrder ? (
-                            <Button style={{paddingLeft: 100, paddingRight: 100}}  variant={'success'} text={'Завершить'}/>
+                            <Button onClick={completeOrder} style={{paddingLeft: 100, paddingRight: 100}}  variant={'success'} text={'Завершить'}/>
                         ) : (
                             <Button style={{paddingLeft: 100, paddingRight: 100}} variant={'primary'} text={'Чат'}/>
                         )

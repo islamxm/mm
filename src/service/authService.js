@@ -691,17 +691,18 @@ class authService {
         }
     }
 
-    changeStatus = async (token, id) => {
+    changeStatus = async (token, id, data) => {
+        console.log(endpoints.orders + `?OrderID=${id}`)
         try {
-            let res = await fetch(endpoints.сhangeStatus, {
+            let res = await fetch(endpoints.orders + `?OrderID=${id}`, {
                 method: 'POST',
                 headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
+                    // 'Content-type': 'form-data',
+                    // 'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                mode: 'no-cors',
-                body: JSON.stringify({serviceId: id})
+                mode: 'cors',
+                body: data
             })
             const response = await checkAuth(res)
             return response
