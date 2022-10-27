@@ -32,6 +32,16 @@ const OrdersList = () => {
     const [offset, setOffset] = useState(0);
     const [fetch, setFetch] = useState(false)
     const [period, setPeriod] = useState('')
+    const [nf, setNf] = useState(999);
+
+
+    // useEffect(() => {
+    //     if(token) {
+    //         as.orders(token).then(res => {
+    //             setNf(res?.orders?.filter(item => item.Status == '0').length)
+    //         })
+    //     }
+    // }, [token])
 
 
     useEffect(() => {
@@ -194,7 +204,7 @@ const OrdersList = () => {
                         <Button onClick={dateModalOpen} style={{width: '100%'}} text={period ? period : 'Выбор даты'} variant={'primary'}/>
                     </Col>
                     <Col span={8}>
-                        <Button onClick={toNewOrders} style={{width: '100%'}} text={period ? period : 'Не завершенные'} variant={'success'}/>
+                        <Button badge={nf} onClick={toNewOrders} style={{width: '100%'}} text={period ? period : 'Не завершенные'} variant={'success'}/>
                     </Col>
                 </Row>
             </div>

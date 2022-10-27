@@ -6,6 +6,8 @@ import OrderDetailItem from '../OrderDetailItem/OrderDetailItem';
 import Button from '../../../../components/Button/Button';
 import authService from '../../../../service/authService';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 const as = new authService()
 
@@ -34,6 +36,7 @@ const OrderDetail = ({
     userData,
     updateList
 }) => {
+    const nav = useNavigate();
     const {token} = useSelector(state => state)
 
     const closeHandle = () => {
@@ -152,7 +155,7 @@ const OrderDetail = ({
                         newOrder ? (
                             <Button onClick={completeOrder} style={{paddingLeft: 100, paddingRight: 100}}  variant={'success'} text={'Завершить'}/>
                         ) : (
-                            <Button style={{paddingLeft: 100, paddingRight: 100}} variant={'primary'} text={'Чат'}/>
+                            <Button onClick={() => nav(`/chat/${UserID}`)} style={{paddingLeft: 100, paddingRight: 100}} variant={'primary'} text={'Чат'}/>
                         )
                     }
                     

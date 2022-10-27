@@ -5,6 +5,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    
 
     &:disabled {
         opacity: .5;
@@ -28,6 +29,24 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    &__badge {
+        border-radius: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        line-height: 14px;
+        color: #fff;
+        font-weight: 700;
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        background-color: red;
     }
 }
 

@@ -10,7 +10,8 @@ const Button = ({
     type,
     style,
     size,
-    onClick
+    onClick,
+    badge
 }) => {
 
 
@@ -54,6 +55,17 @@ const Button = ({
 
     return (
         <button onClick={onClick} style={style} className={"Button" + variantHandle() + sizeHandle() + loadHandle()} type={type} disabled={disabled}>
+            {
+                badge ? (
+                    <div className="Button__badge">
+                        {
+                            badge > 99 ? (
+                                '99+'
+                            ) : badge
+                        }
+                    </div>
+                ) : null
+            }
             {
                 load ? (
                     <div className="Button__load">
