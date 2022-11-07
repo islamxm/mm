@@ -55,13 +55,14 @@ const ChatPage = () => {
         setMessage(e.target.value)
     }
 
+
     const onMessageSubmit = () => {
         if(!message) {
             antMes.error('Напишите сообщение')
         } else {
             setLoad(true)
             const data = {
-                Message: message
+                Message: message[0].toUpperCase() + message.slice(1,message.length)
             }
             as.sendMessage(token, userId, data).then(res => {
                 
@@ -78,7 +79,7 @@ const ChatPage = () => {
 
             const push = {
                 user_ids: userId,
-                push_content: message,
+                push_content: message[0].toUpperCase() + message.slice(1,message.length),
                 push_title: 'Служба поддержки'
             }
 
