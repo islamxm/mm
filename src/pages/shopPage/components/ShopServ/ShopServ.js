@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 const ShopServ = ({id, title, descr, subcat, complect, images, edit}) => {
 
     const editHandle = () => {
-       
         edit(title, descr, subcat, complect, images, id)
     }
 

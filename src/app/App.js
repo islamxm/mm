@@ -28,8 +28,8 @@ const App = () => {
                 <Route path='/stat' element={<CheckAuth><StatPage/></CheckAuth>}/>
                 <Route path='/stat/:id' element={<CheckAuth><StatPage/></CheckAuth>}/>
                 <Route path='/shop' element={<CheckAuth><ShopPage/></CheckAuth>}/>
-                <Route path='/shop/:categoryId' element={<CheckAuth><ShopPageSub/></CheckAuth>}/>
-                <Route path='/shop/:categoryId/:subId' element={<CheckAuth><ShopPageServ/></CheckAuth>}/>
+                {/* <Route path='/shop/:categoryId' element={<CheckAuth><ShopPageSub/></CheckAuth>}/> */}
+                <Route path='/shop/:categoryId' element={<CheckAuth><ShopPageServ/></CheckAuth>}/>
                 <Route path='/users' element={<CheckAuth><UsersPage/></CheckAuth>}/>
                 <Route path='/chat' element={<CheckAuth><ChatPage/></CheckAuth>}/>
                 <Route path='/chat/:userId' element={<CheckAuth><ChatPage/></CheckAuth>}/>

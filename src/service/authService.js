@@ -283,7 +283,7 @@ class authService {
     }
 
 
-    getServices = async (token, catId, id) => {
+    getServices = async (token, id) => {
 
         try {
             let res = await fetch(endpoints.getServices + `id_category=${id}`, {

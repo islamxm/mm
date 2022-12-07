@@ -15,13 +15,12 @@ import EditServ from './components/EditServ/EditServ';
 
 const as = new authService();
 
-const mock =  [1,2,3]
 
 
 const ShopPageServ = () => {
     const {token} = useSelector(state => state);
     const [list, setList] = useState([]);
-    const {categoryId, subId} = useParams();
+    const {categoryId} = useParams();
     const [selected, setSelected] = useState({})
     const [subcat, setSubcat] = useState('')
     const [cat, setCat] = useState('')
@@ -49,18 +48,21 @@ const ShopPageServ = () => {
         openEdit();
     }
 
+    
+
     useEffect(() => {
-        if(token && categoryId && subId) {
-            as.getServices(token, categoryId, subId).then(res => {
-              
+        if(token && categoryId) {
+            as.getServices(token, categoryId).then(res => {
                 setList(res)
+                console.log(res)
             })
         }
-    }, [token, categoryId, subId])
+        console.log(categoryId)
+    }, [token, categoryId])
 
     const deleteSubcategory = (subId) => {
         if(token) {
-            as.deleteSubcategory(token, categoryId, subId).then(res => {
+            as.deleteSubcategory(token, categoryId).then(res => {
              
                 setList(res)
             })
@@ -105,7 +107,7 @@ const ShopPageServ = () => {
                                                 complect={item.complectation}
                                                 images={item.images}    
                                                 edit={editHandle}
-                                                subcat={subId}
+                                                // subcat={subId}
                                             />
                                         </div>
                                     ))
